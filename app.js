@@ -24,7 +24,7 @@ var boardHeight = 30;
 var boardWidth = 30;
 
 function createBoard(height, width) {
-	var $cell = $('div').css({ 'height':'10px'; 'width':'10px'; 'background':'yellow'; 'border':'1px solid';});
+	var $cell = $('<div>').css({ 'height':'10px'; 'width':'10px'; 'background':'yellow'; 'border':'1px solid';});
 	$board.append($cell);
 	console.log('kittens');
 }

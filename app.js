@@ -19,20 +19,55 @@ for each cell that's dead...
 		cell = alive
 */ 
 
-var $board = $('#board');
-var boardHeight = 30;
-var boardWidth = 30;
+// var $board = $('#board');
+// var boardHeight = 30;
+// var boardWidth = 30;
 
-// function Cell(config) {
-//     config = config || {};
-//     this.state = config.state || "alive"; // alive or dead
-// };
+// // function Cell(config) {
+// //     config = config || {};
+// //     this.state = config.state || "alive"; // alive or dead
+// // };
 
-function createBoard(height, width) {
-	var $cell = $('<div>').addClass('cell');
-	$cell.alive = true;
-	$board.append($cell);
+// function createBoard(height, width) {
+// 	// var $cell = $('<div>').addClass('cell');
+// 	// $cell.alive = true;
+// 	// $board.append($cell);
+// 	var $grid = $('<table>')
+
+// }
+
+// createBoard(boardHeight, boardWidth);
+
+var lastClicked;
+var grid = clickableGrid(30,30,function(el,row,col,i){
+    console.log("You clicked on element:",el);
+    console.log("You clicked on row:",row);
+    console.log("You clicked on col:",col);
+    console.log("You clicked on item #:",i);
+
+    el.className='clicked';
+    if (lastClicked) lastClicked.className='';
+    lastClicked = el;
+});
+
+document.body.appendChild(grid);
+     
+function clickableGrid( rows, cols, callback ){
+    var i=0;
+    var grid = document.createElement('table');
+    grid.className = 'grid';
+    for (var r=0;r<rows;++r){
+        var tr = grid.appendChild(document.createElement('tr'));
+        for (var c=0;c<cols;++c){
+            var cell = tr.appendChild(document.createElement('td'));
+            //cell.innerHTML = ++i;
+            cell.addEventListener('click',(function(el,r,c,i){
+                return function(){
+                    callback(el,r,c,i);
+                }
+            })(cell,r,c,i),false);
+        }
+    }
+    return grid;
 }
-
-createBoard(boardHeight, boardWidth);
 

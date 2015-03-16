@@ -19,25 +19,6 @@ for each cell that's dead...
 		cell = alive
 */ 
 
-// var $board = $('#board');
-// var boardHeight = 30;
-// var boardWidth = 30;
-
-// // function Cell(config) {
-// //     config = config || {};
-// //     this.state = config.state || "alive"; // alive or dead
-// // };
-
-// function createBoard(height, width) {
-// 	// var $cell = $('<div>').addClass('cell');
-// 	// $cell.alive = true;
-// 	// $board.append($cell);
-// 	var $grid = $('<table>')
-
-// }
-
-// createBoard(boardHeight, boardWidth);
-
 var lastClicked;
 var grid = makeGrid(30,30);
 

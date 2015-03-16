@@ -19,7 +19,6 @@ for each cell that's dead...
 		cell = alive
 */ 
 
-var lastClicked;
 var grid = makeGrid(30,30);
 
 document.body.appendChild(grid);
@@ -27,19 +26,30 @@ document.body.appendChild(grid);
 function makeGrid( rows, cols ){
     var i=0;
     var grid = document.createElement('table');
+    grid.aliveArray = [];
     grid.className = 'grid';
     for (var r=0;r<rows;++r){
         var tr = grid.appendChild(document.createElement('tr'));
         for (var c=0;c<cols;++c){
             var cell = tr.appendChild(document.createElement('td'));
             cell.id = ++i;
-            if (cell.id % 5 === 0) {
+            if (cell.id % 100 === 0) {
                 var alive = true;
-                //console.log(cell.id);
+                grid.aliveArray.push(cell);
             }
         }
     }
+    console.log(grid.aliveArray);
     return grid;
 }
+
+var $playBtn = $('#playBtn');
+function play() {
+    for (x in grid.aliveArray) {
+        console.log('kittens');
+    }
+}
+$playBtn.on('click', play());
+
 
 

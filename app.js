@@ -23,10 +23,15 @@ var $board = $('#board');
 var boardHeight = 30;
 var boardWidth = 30;
 
+// function Cell(config) {
+//     config = config || {};
+//     this.state = config.state || "alive"; // alive or dead
+// };
+
 function createBoard(height, width) {
-	var $cell = $('<div>').css({ 'height':'10px'; 'width':'10px'; 'background':'yellow'; 'border':'1px solid';});
+	var $cell = $('<div>').addClass('cell');
+	$cell.alive = true;
 	$board.append($cell);
-	console.log('kittens');
 }
 
 createBoard(boardHeight, boardWidth);

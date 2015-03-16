@@ -39,12 +39,11 @@ for each cell that's dead...
 // createBoard(boardHeight, boardWidth);
 
 var lastClicked;
-var grid = makeGrid(30,30,function(el,row,col,i){
-});
+var grid = makeGrid(30,30);
 
 document.body.appendChild(grid);
 
-function makeGrid( rows, cols, callback ){
+function makeGrid( rows, cols ){
     var i=0;
     var grid = document.createElement('table');
     grid.className = 'grid';
@@ -61,4 +60,5 @@ function makeGrid( rows, cols, callback ){
     }
     return grid;
 }
+
 

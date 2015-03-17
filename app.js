@@ -18,10 +18,9 @@ for each cell that's dead...
 	if neighbors === 3
 		cell = alive
 */ 
+//var $board = $('#board');
 
-var grid = makeGrid(30,30);
-
-document.body.appendChild(grid);
+$(document).ready(function() {
 
 function makeGrid( rows, cols ){
     var i=0;
@@ -35,21 +34,31 @@ function makeGrid( rows, cols ){
             cell.id = ++i;
             if (cell.id % 100 === 0) {
                 var alive = true;
+                //cell.addClass('alive');
                 grid.aliveArray.push(cell);
             }
         }
     }
-    console.log(grid.aliveArray);
+    //console.log(grid.aliveArray);
     return grid;
 }
 
-var $playBtn = $('#playBtn');
-function play() {
-    for (x in grid.aliveArray) {
+var grid = makeGrid(30,30);
+
+function play(aliveArray) {
+    for (x in aliveArray) {
         console.log('kittens');
+        //aliveArray[x].addClass('alive');
     }
 }
-$playBtn.on('click', play());
+
+$('#playBtn').click(play(grid.aliveArray));
+document.body.appendChild(grid);
+
+
+//     //
+//$playBtn.click(play());
+});
 
 
 

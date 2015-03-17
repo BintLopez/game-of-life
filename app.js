@@ -48,7 +48,7 @@ var grid = makeGrid(30,30);
 function play(aliveArray) {
     for (x in aliveArray) {
         console.log('kittens');
-        //aliveArray[x].addClass('alive');
+        aliveArray[x].setAttribute('class', 'alive');
     }
 }
 

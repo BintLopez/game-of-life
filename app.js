@@ -1,24 +1,4 @@
-/*
-Initial set up designates certain cells alive or dead
 
-Upon starting the program, there are 'generations'
-For each generation, cells either are alive or dead based on the number of alive or dead neighbors
-
-Alive/Dead state for each new generation determined by the following rules:
-
-for each cell that's alive...
-	if neighbors < 2
-		cell = dead
-	if 1 < neighbors < 4
-		cell = alive
-	if neighbors > 3
-		cell = dead
-
-for each cell that's dead...
-	if neighbors === 3
-		cell = alive
-*/ 
-//var $board = $('#board');
 function gridInit( rows, cols ){
     var i=0;
     var grid = document.createElement('table');
@@ -42,34 +22,30 @@ function gridInit( rows, cols ){
     return grid;
 }
 
+//NEED FUNCTION THAT FIGURES OUT IDs of NEIGHBORS
+function num_neighbors(cells, diff) {
+    console.log(cells.length);
+    for (var i = 0; i < cells.length-cells.length+10; i++) {
+        c = cells[i];
+        //console.log(c.id);
+        c.neighbors = [ parseInt(c.id)-diff-1, parseInt(c.id)-diff, parseInt(c.id)-diff+1, parseInt(c.id)-1, parseInt(c.id)+1, parseInt(c.id)+diff-1, parseInt(c.id)+diff, parseInt(c.id)+diff+1];
+        console.log(c.neighbors);
+    }
+}
+
 function play() {
+    //start the generations
     console.log('kittens');
 }
 
 
 $(document).ready(function() {
 
-
-
-
-
-//this function iterates through the aliveArray 
-// function play(aliveArray) {
-//     for (x in aliveArray) {
-//         aliveArray[x].setAttribute('class', 'alive');
-//     }
-// }
-
-
-
-
 rows = 30;
 cols = 80;
 var grid = gridInit(rows,cols);
 document.body.appendChild(grid);
-
-//var playBtn = document.getElementById('playBtn');
-//playBtn.setAttribute('onclick', 'play()'); 
+num_neighbors(grid.Cells);
 
 });
 

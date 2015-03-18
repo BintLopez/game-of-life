@@ -19,12 +19,10 @@ for each cell that's dead...
 		cell = alive
 */ 
 //var $board = $('#board');
-
-$(document).ready(function() {
-
-function makeGrid( rows, cols ){
+function gridInit( rows, cols ){
     var i=0;
     var grid = document.createElement('table');
+    grid.Cells = [];
     grid.aliveArray = [];
     grid.className = 'grid';
     for (var r=0;r<rows;++r){
@@ -32,9 +30,10 @@ function makeGrid( rows, cols ){
         for (var c=0;c<cols;++c){
             var cell = tr.appendChild(document.createElement('td'));
             cell.id = ++i;
-            if (cell.id % 100 === 0) {
+            grid.Cells.push(cell);
+            if (cell.id % 67 === 0 || cell.id %75 === 0 || cell.id %25 === 0) {
                 var alive = true;
-                //cell.addClass('alive');
+                cell.setAttribute('class', 'alive');
                 grid.aliveArray.push(cell);
             }
         }
@@ -43,21 +42,35 @@ function makeGrid( rows, cols ){
     return grid;
 }
 
-var grid = makeGrid(30,30);
-
-function play(aliveArray) {
-    for (x in aliveArray) {
-        console.log('kittens');
-        aliveArray[x].setAttribute('class', 'alive');
-    }
+function play() {
+    console.log('kittens');
 }
 
-$('#playBtn').click(play(grid.aliveArray));
+
+$(document).ready(function() {
+
+
+
+
+
+//this function iterates through the aliveArray 
+// function play(aliveArray) {
+//     for (x in aliveArray) {
+//         aliveArray[x].setAttribute('class', 'alive');
+//     }
+// }
+
+
+
+
+rows = 30;
+cols = 80;
+var grid = gridInit(rows,cols);
 document.body.appendChild(grid);
 
+//var playBtn = document.getElementById('playBtn');
+//playBtn.setAttribute('onclick', 'play()'); 
 
-//     //
-//$playBtn.click(play());
 });
 
 

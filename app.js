@@ -23,12 +23,18 @@ function gridInit( rows, cols ){
 }
 
 //NEED FUNCTION THAT FIGURES OUT IDs of NEIGHBORS
-function num_neighbors(cells, diff) {
+function find_neighbors(id) {
+    neighbors = [ parseInt(id)-cols-1, parseInt(id)-cols, parseInt(id)-cols+1, parseInt(id)-1, parseInt(id)+1, parseInt(id)+cols-1, parseInt(id)+cols, parseInt(id)+cols+1];
+    return neighbors;
+}
+
+
+function num_neighbors(cells, cols) {
     console.log(cells.length);
     for (var i = 0; i < cells.length-cells.length+10; i++) {
         c = cells[i];
         //console.log(c.id);
-        c.neighbors = [ parseInt(c.id)-diff-1, parseInt(c.id)-diff, parseInt(c.id)-diff+1, parseInt(c.id)-1, parseInt(c.id)+1, parseInt(c.id)+diff-1, parseInt(c.id)+diff, parseInt(c.id)+diff+1];
+        c.neighbors = find_neighbors(c.id);
         console.log(c.neighbors);
     }
 }
@@ -45,7 +51,7 @@ rows = 30;
 cols = 80;
 var grid = gridInit(rows,cols);
 document.body.appendChild(grid);
-num_neighbors(grid.Cells);
+num_neighbors(grid.Cells, cols);
 
 });
 

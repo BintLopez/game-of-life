@@ -12,8 +12,7 @@ function gridInit( rows, cols ){
             cell.id = ++i;
             grid.Cells.push(cell);
             if (cell.id % 67 === 0 || cell.id %75 === 0 || cell.id %25 === 0) {
-                var alive = true;
-                cell.setAttribute('class', 'alive');
+                var cell.alive = true;
                 grid.aliveArray.push(cell);
             }
         }
@@ -26,6 +25,14 @@ function gridInit( rows, cols ){
 function find_neighbors(id) {
     neighbors = [ parseInt(id)-cols-1, parseInt(id)-cols, parseInt(id)-cols+1, parseInt(id)-1, parseInt(id)+1, parseInt(id)+cols-1, parseInt(id)+cols, parseInt(id)+cols+1];
     return neighbors;
+}
+
+function aliveDisplay(cells) {
+    for (i in cells) {
+        if (cells[i].alive) {
+            cells[i].setAttribute('class', 'alive');
+        }
+    }
 }
 
 

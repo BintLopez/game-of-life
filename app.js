@@ -1,3 +1,25 @@
+//
+
+// function Grid(config) {
+//     config = config || {};
+//     this.question = config.question || " ";
+//     this.possibleAnswers = config.possibleAnswers || " ";
+//     this.inputType = config.inputType || "text"; //possible answers 'checkbox', 'radio', or 'text'
+//     this.name  = config.name || " ";
+//     this.onPage = config.onPage || " ";
+// };
+
+// //FUNCTION THAT INSTANTIATES AN OBJECT
+
+// function QuestionLib(formQuestions) {
+//   this.items = [];
+//   for (var i = 0; i < formQuestions.length; i++) {
+//     this.items.push(new Question(formQuestions[i]));
+//   }
+// };
+
+// // Calls the function QuestionLib and adds the results of the function to var questionList
+// var questionsList = new QuestionLib(formQuestions);
 
 function gridInit( rows, cols ){
     var i=0;
@@ -11,13 +33,13 @@ function gridInit( rows, cols ){
             var cell = tr.appendChild(document.createElement('td'));
             cell.id = ++i;
             grid.Cells.push(cell);
-            if (cell.id % 67 === 0 || cell.id %75 === 0 || cell.id %25 === 0) {
-                var cell.alive = true;
-                grid.aliveArray.push(cell);
+            if (cell.id % 200 === 0) {
+                    //var cell.alive = true;
+                    grid.aliveArray.push(cell);
             }
         }
     }
-    //console.log(grid.aliveArray);
+    console.log(grid.aliveArray);
     return grid;
 }
 
@@ -27,6 +49,7 @@ function find_neighbors(id) {
     return neighbors;
 }
 
+//THIS FUNCTION IS WHAT BROKE THINGS
 function aliveDisplay(cells) {
     for (i in cells) {
         if (cells[i].alive) {
@@ -34,7 +57,6 @@ function aliveDisplay(cells) {
         }
     }
 }
-
 
 function num_neighbors(cells, cols) {
     console.log(cells.length);
@@ -51,14 +73,15 @@ function play() {
     console.log('kittens');
 }
 
-
 $(document).ready(function() {
+
 
 rows = 30;
 cols = 80;
 var grid = gridInit(rows,cols);
 document.body.appendChild(grid);
-num_neighbors(grid.Cells, cols);
+aliveDisplay(grid.aliveArray);
+//num_neighbors(grid.Cells, cols);
 
 });
 

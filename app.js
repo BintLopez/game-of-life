@@ -1,13 +1,11 @@
 //
 
-// function Grid(config) {
-//     config = config || {};
-//     this.question = config.question || " ";
-//     this.possibleAnswers = config.possibleAnswers || " ";
-//     this.inputType = config.inputType || "text"; //possible answers 'checkbox', 'radio', or 'text'
-//     this.name  = config.name || " ";
-//     this.onPage = config.onPage || " ";
-// };
+function Cell(config, i) {
+    config = config || {};
+    this.id = i
+    this.isAlive = config.isAlive || "false";
+    this.neighbors = config.neighbors || [];
+};
 
 // //FUNCTION THAT INSTANTIATES AN OBJECT
 
@@ -22,40 +20,45 @@
 // var questionsList = new QuestionLib(formQuestions);
 
 function gridInit( rows, cols ){
-    var i=0;
+    var i=1;
     var grid = document.createElement('table');
-    grid.Cells = [];
-    grid.aliveArray = [];
+    var Cells = [];
     grid.className = 'grid';
     for (var r=0;r<rows;++r){
         var tr = grid.appendChild(document.createElement('tr'));
         for (var c=0;c<cols;++c){
-            var cell = tr.appendChild(document.createElement('td'));
-            cell.id = ++i;
-            grid.Cells.push(cell);
-            if (cell.id % 200 === 0) {
-                    //var cell.alive = true;
-                    grid.aliveArray.push(cell);
-            }
+            var cell = new Cell(i)
+            var td = document.createElement('td');
+            td.innerHTML = i;
+            tr.appendChild(td);
+            Cells.push(cell);
+            i = ++i;
         }
     }
-    console.log(grid.aliveArray);
     return grid;
+}
+
+//don't expect this to work right now
+function aliveInit() {
+    if (cell.id % 400 === 0) {
+        //var cell.alive = true;
+        grid.aliveArray.push(cell);
+    }
+}
+
+//THIS FUNCTION IS WHAT BROKE THINGS
+function aliveDisplay(cells) {
+    for (i in cells) {
+        if (cells[i].isAlive) {
+            cells[i].setAttribute('class', 'alive');
+        }
+    }
 }
 
 //NEED FUNCTION THAT FIGURES OUT IDs of NEIGHBORS
 function find_neighbors(id) {
     neighbors = [ parseInt(id)-cols-1, parseInt(id)-cols, parseInt(id)-cols+1, parseInt(id)-1, parseInt(id)+1, parseInt(id)+cols-1, parseInt(id)+cols, parseInt(id)+cols+1];
     return neighbors;
-}
-
-//THIS FUNCTION IS WHAT BROKE THINGS
-function aliveDisplay(cells) {
-    for (i in cells) {
-        if (cells[i].alive) {
-            cells[i].setAttribute('class', 'alive');
-        }
-    }
 }
 
 function num_neighbors(cells, cols) {

@@ -9,11 +9,9 @@ function Cell(config, i) {
 
 // //FUNCTION THAT INSTANTIATES AN OBJECT
 
-function Cells(formQuestions) {
+function Cells(numInGrid) {
   this.items = [];
-  for (var i = 0; i < formQuestions.length; i++) {
-    this.items.push(new Question(formQuestions[i]));
-  }
+    this.items.push(new Cell(numInGrid[i]));
 };
 
 // // Calls the function QuestionLib and adds the results of the function to var questionList
@@ -43,17 +41,19 @@ function gridInit( rows, cols, cells ){
 }
 
 //don't expect this to work right now
-function aliveInit(cells, x) {
-    for (x in cells) {
+//Lizzie addition
+function aliveInit(cells, setAlive) {
+    for (y in cells) {
         var row = cells[x];
-        if (cells[i].id % x === 0) {
-            cells[i].setAttribute('class', 'alive');
-        }
+        // if (cells[i].id % setAlive === 0) {
+        //     cells[i].setAttribute('class', 'alive');
+        // }
     }
 }
 
 //THIS FUNCTION IS WHAT BROKE THINGS
-function aliveDisplay(cells) {
+// as an onclick of each 
+function aliveDisplay(cell) {
     for (i in cells) {
         if (cells[i].isAlive) {
             cells[i].setAttribute('class', 'alive');

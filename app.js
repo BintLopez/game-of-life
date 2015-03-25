@@ -9,20 +9,24 @@ function Cell(config, i) {
 
 // //FUNCTION THAT INSTANTIATES AN OBJECT
 
-// function QuestionLib(formQuestions) {
-//   this.items = [];
-//   for (var i = 0; i < formQuestions.length; i++) {
-//     this.items.push(new Question(formQuestions[i]));
-//   }
-// };
+function Cells(formQuestions) {
+  this.items = [];
+  for (var i = 0; i < formQuestions.length; i++) {
+    this.items.push(new Question(formQuestions[i]));
+  }
+};
 
 // // Calls the function QuestionLib and adds the results of the function to var questionList
 // var questionsList = new QuestionLib(formQuestions);
 
-function gridInit( rows, cols ){
+var Cells = [];
+
+
+//appending grid to dom in this function
+//explore 
+function gridInit( rows, cols, cells ){
     var i=1;
     var grid = document.createElement('table');
-    var Cells = [];
     grid.className = 'grid';
     for (var r=0;r<rows;++r){
         var tr = grid.appendChild(document.createElement('tr'));
@@ -39,10 +43,12 @@ function gridInit( rows, cols ){
 }
 
 //don't expect this to work right now
-function aliveInit() {
-    if (cell.id % 400 === 0) {
-        //var cell.alive = true;
-        grid.aliveArray.push(cell);
+function aliveInit(cells, x) {
+    for (x in cells) {
+        var row = cells[x];
+        if (cells[i].id % x === 0) {
+            cells[i].setAttribute('class', 'alive');
+        }
     }
 }
 
@@ -56,6 +62,8 @@ function aliveDisplay(cells) {
 }
 
 //NEED FUNCTION THAT FIGURES OUT IDs of NEIGHBORS
+//right now this detects neighbors where none exist (ie end of rows)
+// will also find numbers before/after first/last elements of array
 function find_neighbors(id) {
     neighbors = [ parseInt(id)-cols-1, parseInt(id)-cols, parseInt(id)-cols+1, parseInt(id)-1, parseInt(id)+1, parseInt(id)+cols-1, parseInt(id)+cols, parseInt(id)+cols+1];
     return neighbors;

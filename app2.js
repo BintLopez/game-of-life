@@ -13,7 +13,6 @@ function cellCreator(rows, cols) {
 		cells[y] = [];
 		for (var x=0; x<cols; x++) {
 			cells[y][x] = new Cell(config, x, y);
-			//findNeighbors(y, x);
 		}
 	}
 }
@@ -62,11 +61,43 @@ function generation() {
 }
 
 //need function that counts num neighbors for each cell
-function findNeighbors(y, x) {
-	if (0 < y && y < rows-1 && 0 < x && x < cols-1) {
-		//cells[y][x].isAlive = true;
-		cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
-		console.log(cells[y][x].neighbors);
+function findNeighbors() {
+	for (var y=0; y<rows; y++) {
+		//neighbors for cells at top edge of grid
+		if (y === 0) || (y === rows-1) {
+			for (var x=0; x<cols; x++) { 
+				cells[y][x].neighbors = [ cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
+			}
+		}
+		//neighbors for cells at bottom edge of grid)
+		else if (y === rows-1) {
+			for (var x=0; x<cols; x++) {
+				cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1] ];
+			}
+		}
+		else {
+			for (var x=0; x<cols; x++) {
+				var thisCell = cells[y][x];
+				//neighbors for cells on left edge of grid
+				if (x === 0) {
+					thisCell.neighbors = [ cells[y-1][x], cells[y-1][x+1], cells[y][x+1], cells[y+1][x], cells[y+1][x+1] ];
+					console.log(thisCell.neighbors);
+					thisCell.isAlive = true;
+				}
+				//neighbors for cells on right edge of grid
+				else if (x === cols-1) {
+					thisCell.neighbors = [ cells[y-1][x], cells[y-1][x-1], cells[y][x-1], cells[y+1][x], cells[y+1][x-1] ];
+					console.log(thisCell.neighbors);
+					thisCell.isAlive = true;
+				}
+				//neighbors for all middle cells
+				else {
+					thisCell.neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
+					//console.log(thisCell.neighbors);
+					//thisCell.isAlive = true;
+				}
+			}
+		}
 	}
 }
 
@@ -93,10 +124,10 @@ function aliveClass(y, x, $cell) {
 
 
 var cells = [];
-var cols = 20;
-var rows = 10;
+var cols = 4;
+var rows = 4;
 
 cellCreator(rows, cols);
-//findNeighbors(15, 5);
+findNeighbors();
 cellDisplay();
 generation();

@@ -60,41 +60,44 @@ function generation() {
     }
 }
 
-//need function that counts num neighbors for each cell
+//need function that finds the neighbors for each cell
 function findNeighbors() {
 	for (var y=0; y<rows; y++) {
-		//neighbors for cells at top edge of grid
-		if (y === 0) || (y === rows-1) {
+		if (y === 0) {
+			//neighbors for cells at top edge of grid
 			for (var x=0; x<cols; x++) { 
 				cells[y][x].neighbors = [ cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
+				console.log(cells[y][x].neighbors);
+				cells[y][x].isAlive = true;
 			}
 		}
-		//neighbors for cells at bottom edge of grid)
 		else if (y === rows-1) {
+			//neighbors for cells at bottom edge of grid
 			for (var x=0; x<cols; x++) {
 				cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1] ];
+				console.log(cells[y][x].neighbors);
+				cells[y][x].isAlive = true;				
 			}
 		}
 		else {
 			for (var x=0; x<cols; x++) {
-				var thisCell = cells[y][x];
 				//neighbors for cells on left edge of grid
 				if (x === 0) {
-					thisCell.neighbors = [ cells[y-1][x], cells[y-1][x+1], cells[y][x+1], cells[y+1][x], cells[y+1][x+1] ];
-					console.log(thisCell.neighbors);
-					thisCell.isAlive = true;
+					cells[y][x].neighbors = [ cells[y-1][x], cells[y-1][x+1], cells[y][x+1], cells[y+1][x], cells[y+1][x+1] ];
+					console.log(cells[y][x].neighbors);
+					cells[y][x].isAlive = true;
 				}
 				//neighbors for cells on right edge of grid
 				else if (x === cols-1) {
-					thisCell.neighbors = [ cells[y-1][x], cells[y-1][x-1], cells[y][x-1], cells[y+1][x], cells[y+1][x-1] ];
-					console.log(thisCell.neighbors);
-					thisCell.isAlive = true;
+					cells[y][x].neighbors = [ cells[y-1][x], cells[y-1][x-1], cells[y][x-1], cells[y+1][x], cells[y+1][x-1] ];
+					console.log(cells[y][x].neighbors);
+					cells[y][x].isAlive = true;
 				}
 				//neighbors for all middle cells
 				else {
-					thisCell.neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
-					//console.log(thisCell.neighbors);
-					//thisCell.isAlive = true;
+					cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
+					//console.log(cells[y][x].neighbors);
+					//cells[y][x].isAlive = true;
 				}
 			}
 		}

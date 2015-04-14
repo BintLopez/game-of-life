@@ -4,7 +4,7 @@ function Cell(config, x, y) {
     config = config || {};
     this.x = x;
     this.y = y; 
-    this.isAlive = config.isAlive || "false";
+    this.isAlive = config.isAlive || true;
     this.neighbors = config.neighbors || [];
 };
 
@@ -23,8 +23,9 @@ function cellDisplay() {
 		var $row = $('<tr>');
 		$grid.append($row);
 		for (x in cells[y]) {
-			var $cell = ('<td>');
-			//$cell.css('background', 'yellow');
+			var $cell = $('<td>');
+			//run function here that takes a y, x, & $cell as arguments & checks if cell[y][x].isAlive === true then adds class alive
+			aliveClass(y, x, $cell);
 			$row.append($cell);
 			//$cell.isAlive = true;
 			//cells[y][x].jqueryElement = $cell;
@@ -67,13 +68,9 @@ function generation() {
 // ie after cellCreator()
 
 //function that updates the CSS class using jQuery addClass, removeClass every frame depending on when its alive or dead
-function generation() {
-    for (y in cells) {
-    	for (x in cells[y]) {
-    		if (cells[y][x].isAlive === true) {
-    			cells[y][x].addClass('alive');
-    		}
-    	}
+function aliveClass(y, x, $cell) {
+    if (cells[y][x].isAlive === true) {
+    	$cell.addClass('alive');
     }
 }
 

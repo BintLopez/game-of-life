@@ -65,7 +65,7 @@ function findNeighbors() {
 	for (var y=0; y<rows; y++) {
 		if (y === 0) {
 			//neighbors for cells at top edge of grid
-			for (var x=0; x<cols; x++) { 
+			for (var x=1; x<cols-1; x++) { 
 				cells[y][x].neighbors = [ cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
 				console.log(cells[y][x].neighbors);
 				cells[y][x].isAlive = true;
@@ -73,13 +73,13 @@ function findNeighbors() {
 		}
 		else if (y === rows-1) {
 			//neighbors for cells at bottom edge of grid
-			for (var x=0; x<cols; x++) {
+			for (var x=1; x<cols-1; x++) {
 				cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1] ];
 				console.log(cells[y][x].neighbors);
 				cells[y][x].isAlive = true;				
 			}
 		}
-		else {
+		else if (0 < y < rows-1) {
 			for (var x=0; x<cols; x++) {
 				//neighbors for cells on left edge of grid
 				if (x === 0) {
@@ -96,8 +96,8 @@ function findNeighbors() {
 				//neighbors for all middle cells
 				else {
 					cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
-					//console.log(cells[y][x].neighbors);
-					//cells[y][x].isAlive = true;
+					console.log(cells[y][x].neighbors);
+					cells[y][x].isAlive = true;
 				}
 			}
 		}

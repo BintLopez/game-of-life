@@ -24,9 +24,9 @@ function cellDisplay() {
 		$grid.append($row);
 		for (x in cells[y]) {
 			var $cell = ('<td>');
+			//$cell.css('background', 'yellow');
 			$row.append($cell);
 			//$cell.isAlive = true;
-			//$cell.addClass('alive');
 			//cells[y][x].jqueryElement = $cell;
 		}
 	}

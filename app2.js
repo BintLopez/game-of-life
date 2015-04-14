@@ -4,7 +4,7 @@ function Cell(config, x, y) {
     config = config || {};
     this.x = x;
     this.y = y; 
-    this.isAlive = config.isAlive || true;
+    this.isAlive = config.isAlive || false;
     this.neighbors = config.neighbors || [];
 };
 
@@ -13,6 +13,7 @@ function cellCreator(rows, cols) {
 		cells[y] = [];
 		for (var x=0; x<cols; x++) {
 			cells[y][x] = new Cell(config, x, y);
+			//findNeighbors(y, x);
 		}
 	}
 }
@@ -24,11 +25,9 @@ function cellDisplay() {
 		$grid.append($row);
 		for (x in cells[y]) {
 			var $cell = $('<td>');
-			//run function here that takes a y, x, & $cell as arguments & checks if cell[y][x].isAlive === true then adds class alive
+			//function checks isAlive for true & adds class 'alive'
 			aliveClass(y, x, $cell);
 			$row.append($cell);
-			//$cell.isAlive = true;
-			//cells[y][x].jqueryElement = $cell;
 		}
 	}
 	$('#board').append($grid).addClass('grid');
@@ -63,8 +62,11 @@ function generation() {
 }
 
 //need function that counts num neighbors for each cell
+function findNeighbors(y, x) {
+	cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
+}
 
-//function that computes the neighbors for each cell (this needs to happen after all the cells are created)
+//function that computes the number of alive neighbors for each cell (this needs to happen after all the cells are created)
 // ie after cellCreator()
 
 //function that updates the CSS class using jQuery addClass, removeClass every frame depending on when its alive or dead
@@ -87,7 +89,10 @@ function aliveClass(y, x, $cell) {
 
 
 var cells = [];
+var cols = 20;
+var rows = 10;
 
-cellCreator(10, 10);
+cellCreator(rows, cols);
+cells[rows-1][3].isAlive = true;
 cellDisplay();
 generation();

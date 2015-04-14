@@ -13,7 +13,7 @@ function cellCreator(rows, cols) {
 		cells[y] = [];
 		for (var x=0; x<cols; x++) {
 			cells[y][x] = new Cell(config, x, y);
-			findNeighbors(y, x);
+			//findNeighbors(y, x);
 		}
 	}
 }
@@ -66,6 +66,7 @@ function findNeighbors(y, x) {
 	if (0 < y && y < rows-1 && 0 < x && x < cols-1) {
 		//cells[y][x].isAlive = true;
 		cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
+		console.log(cells[y][x].neighbors);
 	}
 }
 
@@ -96,6 +97,6 @@ var cols = 20;
 var rows = 10;
 
 cellCreator(rows, cols);
-//cells[rows-1][3].isAlive = true;
+//findNeighbors(15, 5);
 cellDisplay();
 generation();

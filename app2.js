@@ -70,8 +70,7 @@ function findNeighbors() {
 			if (y === 0 && 0 < x && x < (cols-1)) {
 				cells[y][x].neighbors = [ cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
 				//console.log(cells[y][x].neighbors);
-				console.log("y = "+ y,"x = " + x);
-				cells[y][x].isAlive = true;
+				cells[y][x].isAlive = false;
 			}
 			//neighbors for cells at bottom edge of grid
 			else if (y === (rows-1) && 0 < x && x < (cols-1)) {
@@ -94,19 +93,41 @@ function findNeighbors() {
 				cells[y][x].isAlive = false;
 			}
 
-			//neighbors for corner cells
-			// else if () {
-			// 
-			// }
+			//neighbors for upper left corner cell
+			else if (y === 0 && x === 0) {
+				cells[y][x].neighbors = [ cells[y][x+1], cells[y+1][x+1], cells[y+1][x] ];
+				console.log(cells[y][x].neighbors);
+				cells[y][x].isAlive = true;
+			}
+
+			//neighbors for upper right corner cell
+			else if (y === 0 && x === (cols-1)) {
+				cells[y][x].neighbors = [ cells[y][x-1], cells[y+1][x-1], cells[y+1][x] ];
+				console.log(cells[y][x].neighbors);
+				cells[y][x].isAlive = true;
+			}
+
+			//neighbors for lower left corner cell
+			else if (y === (rows-1) && x === 0) {
+				cells[y][x].neighbors = [ cells[y][x+1], cells[y-1][x+1], cells[y-1][x] ];
+				console.log(cells[y][x].neighbors);
+				cells[y][x].isAlive = true;
+			}
+
+			//neighbors for lower right corner cell
+			else if (y === (rows-1) && x === (cols-1)) {
+				cells[y][x].neighbors = [ cells[y][x-1], cells[y-1][x-1], cells[y-1][x] ];
+				console.log(cells[y][x].neighbors);
+				cells[y][x].isAlive = true;
+			}
 			
 			//neighbors for all middle cells
 			else {
 
-				//cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
-				//console.log(cells[y][x].neighbors);
-				//cells[y][x].isAlive = false;
+				cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
+				console.log(cells[y][x].neighbors);
+				cells[y][x].isAlive = false;
 			}
-			console.log('yo');
 		}
 	}
 }

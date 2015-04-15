@@ -67,28 +67,28 @@ function findNeighbors() {
 		for (var x=0; x<cols; x++) {
 
 			//neighbors for cells at top edge of grid
-			if (y === 0 && 0 < x < cols-1) {
+			if (y === 0 && 0 < x && x < (cols-1)) {
 				cells[y][x].neighbors = [ cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
 				//console.log(cells[y][x].neighbors);
 				console.log("y = "+ y,"x = " + x);
-				cells[y][x].isAlive = false;
+				cells[y][x].isAlive = true;
 			}
 			//neighbors for cells at bottom edge of grid
-			else if (y === rows-1 && 0 < x < cols-1) {
+			else if (y === (rows-1) && 0 < x && x < (cols-1)) {
 				cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1] ];
 				//console.log(cells[y][x].neighbors);
 				cells[y][x].isAlive = false;				
 			}
 
 			//neighbors for cells on left edge of grid
-			else if (0 < y < rows-1 && x === 0) {
+			else if (0 < y && y < (rows-1) && x === 0) {
 				cells[y][x].neighbors = [ cells[y-1][x], cells[y-1][x+1], cells[y][x+1], cells[y+1][x], cells[y+1][x+1] ];
 				//console.log(cells[y][x].neighbors);
 				cells[y][x].isAlive = false;
 			}
 			
 			//neighbors for cells on right edge of grid
-			else if (0 < y < rows-1 && x === cols-1) {
+			else if (0 < y && y < (rows-1) && x === (cols-1)) {
 				cells[y][x].neighbors = [ cells[y-1][x], cells[y-1][x-1], cells[y][x-1], cells[y+1][x], cells[y+1][x-1] ];
 				//console.log(cells[y][x].neighbors);
 				cells[y][x].isAlive = false;
@@ -101,10 +101,12 @@ function findNeighbors() {
 			
 			//neighbors for all middle cells
 			else {
-				cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
+
+				//cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
 				//console.log(cells[y][x].neighbors);
-				cells[y][x].isAlive = false;
+				//cells[y][x].isAlive = false;
 			}
+			console.log('yo');
 		}
 	}
 }

@@ -36,25 +36,27 @@ function cellDisplay() {
 
 //this function runs every frame of the game and will update the css class of the cell
 function generation() {
+	//var numAlive = 0;
     for (y in cells) {
     	for (x in cells[y]) {
+    		numAliveNeighbors(cells[y][x]);
     		if (cells[y][x].isAlive === true) {
     		// Any live cell with fewer than two live neighbours dies, as if caused by under-population.
-	    		if (cells[y][x].num_neighbors < 2) {
+	    		if (cells[y][x].numNeighbors < 2) {
 	    			cells[y][x].isAlive = false;
 	    		}
 	    		// Any live cell with two or three live neighbours lives on to the next generation.
-	    		else if (cells[y][x].num_neighbors === 2 || cells[y][x].num_neighbors === 3 ) {
+	    		else if (cells[y][x].numNeighbors === 2 || cells[y][x].num_neighbors === 3 ) {
 					cells[y][x].isAlive = true;
 				}
 	    		// Any live cell with more than three live neighbours dies, as if by overcrowding.
-	    		else if (cells[y][x].num_neighbors > 3) {
+	    		else if (cells[y][x].numNeighbors > 3) {
 	    			cells[y][x].isAlive = false;
 	    		}
     		}
     		else {
 	    		// Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.	
-	    		if (cells[y][x].num_neighbors === 3) {
+	    		if (cells[y][x].numNeighbors === 3) {
 	    			cells[y][x].isAlive = true;
 	    		}
     		}
@@ -136,17 +138,17 @@ function findNeighbors() {
 
 //function that takes a cell obj & returns the number of alive neighbors
 function numAliveNeighbors(cell) {
-	numAlive = 0;
+	i = 0;
 	//console.log(cell);
 	var neighbors = cell.neighbors;
 	//console.log(neighbors);
 	for (n in neighbors) {
 		if (neighbors[n].isAlive === true) {
-			numAlive += 1;
+			i += 1;
 		}
 	}
 	//console.log(numAlive);
-	return numAlive;
+	cell.numNeighbors = i;
 }
 
 //function that updates the CSS class using jQuery addClass, removeClass every frame depending on when its alive or dead
@@ -170,14 +172,11 @@ function aliveInit() {
 // future ideas  -- change cells alive or nah on click
 
 //start function that starts playing onclick
-function play() {
-	aliveInit();
-	setInterval(function() {
-          // Do something every 2 seconds
-          // call generation frame function
-    }, 2000);
-}
 
+	// setInterval(function() {
+ //          // Do something every 2 seconds
+ //          // call generation frame function
+ //    }, 2000);
 
 
 
@@ -188,10 +187,20 @@ var cols = 10;
 var rows = 10;
 
 cellCreator(rows, cols);
-aliveInit();
+//aliveInit();
 cellDisplay();
 findNeighbors();
 
 
-//numAliveNeighbors(cells[2][3]);
+numAliveNeighbors(cells[2][3]);
+console.log(cells[2][3].numNeighbors);
 //generation();
+
+$(document).ready(function() {
+	$('#playBtn').click(function() {
+		console.log('kittens');
+		cells[4][3].isAlive = true;
+	});
+}); 
+
+

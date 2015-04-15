@@ -187,20 +187,31 @@ var cols = 10;
 var rows = 10;
 
 cellCreator(rows, cols);
-//aliveInit();
+aliveInit();
 cellDisplay();
 findNeighbors();
-
+//aliveInit();
 
 numAliveNeighbors(cells[2][3]);
 console.log(cells[2][3].numNeighbors);
 //generation();
 
-$(document).ready(function() {
-	$('#playBtn').click(function() {
-		console.log('kittens');
-		cells[4][3].isAlive = true;
-	});
-}); 
+
+
+//Both of these work to console log kittens but not to make cells[y][x].isAlive true. Have tried this code outside of document ready, and before and after defining all variables and calling all functions
+// $(document).ready(function() {
+
+
+// function play() {
+// 	console.log('kittens');
+// 	cells[4][3].isAlive = true;
+// }
+
+// $('#playBtn').click(function() {
+// 	console.log('kittens');
+// 	cells[4][3].isAlive = true;
+// });
+
+// }); 
 
 

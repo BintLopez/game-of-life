@@ -166,14 +166,18 @@ function aliveInit() {
 	}
 }
 
-//function -- need alive initializer function
 
 // future ideas  -- change cells alive or nah on click
 
 //start function that starts playing onclick
-    setInterval(function() {
+function play() {
+	aliveInit();
+	setInterval(function() {
           // Do something every 2 seconds
+          // call generation frame function
     }, 2000);
+}
+
 
 
 

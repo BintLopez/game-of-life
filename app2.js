@@ -60,11 +60,14 @@ function generation() {
 	    			cells[y][x].isAlive = true;
 	    		}
     		}
+    		//update the display each frame?
+    		//cellDisplay();
+    		//aliveClass();
     	}
     }
 }
 
-//need function that finds the neighbors for each cell
+//finds the neighbors for each cell
 function findNeighbors() {
 	for (var y=0; y<rows; y++) {
 		for (var x=0; x<cols; x++) {
@@ -151,16 +154,18 @@ function numAliveNeighbors(cell) {
 	cell.numNeighbors = i;
 }
 
-//function that updates the CSS class using jQuery addClass, removeClass every frame depending on when its alive or dead
+//function that sets that checks if cells are alive & adds class alive
 function aliveClass(y, x, $cell) {
     if (cells[y][x].isAlive === true) {
     	$cell.addClass('alive');
     }
 }
 
+//sets up which cells start out alive
 function aliveInit() {
 	for (y in cells) {
 		for (x in cells[y]) {
+			//eventually make this randomized
 			if (x % 2 === 0) {
 				cells[y][x].isAlive = true;
 			}

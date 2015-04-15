@@ -127,7 +127,7 @@ function findNeighbors() {
 
 				cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
 				//console.log(cells[y][x].neighbors);
-				cells[y][x].isAlive = true;
+				//cells[y][x].isAlive = true;
 			}
 		}
 	}
@@ -137,15 +137,15 @@ function findNeighbors() {
 //function that takes a cell obj & returns the number of alive neighbors
 function numAliveNeighbors(cell) {
 	numAlive = 0;
-	console.log(cell);
+	//console.log(cell);
 	var neighbors = cell.neighbors;
-	console.log(neighbors);
+	//console.log(neighbors);
 	for (n in neighbors) {
 		if (neighbors[n].isAlive === true) {
 			numAlive += 1;
 		}
 	}
-	console.log(numAlive);
+	//console.log(numAlive);
 	return numAlive;
 }
 
@@ -154,6 +154,16 @@ function aliveClass(y, x, $cell) {
     if (cells[y][x].isAlive === true) {
     	$cell.addClass('alive');
     }
+}
+
+function aliveInit() {
+	for (y in cells) {
+		for (x in cells[y]) {
+			if (x % 2 === 0) {
+				cells[y][x].isAlive = true;
+			}
+		}
+	}
 }
 
 //function -- need alive initializer function
@@ -167,15 +177,17 @@ function aliveClass(y, x, $cell) {
 
 
 
-//FYI -- syntax declaring empty array could be source of bugs in future
+//FYI -- syntax declaring empty array (single instead of double) could be source of bugs in future
 var cells = [];
 
-var cols = 5;
-var rows = 5;
+var cols = 10;
+var rows = 10;
 
 cellCreator(rows, cols);
+aliveInit();
+cellDisplay();
 findNeighbors();
 
-cellDisplay();
+
 //numAliveNeighbors(cells[2][3]);
 //generation();

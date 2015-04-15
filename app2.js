@@ -25,6 +25,7 @@ function cellDisplay() {
 		$grid.append($row);
 		for (x in cells[y]) {
 			var $cell = $('<td>');
+			$cell.append($('<p>'+ y +', ' + x +'</p>'));
 			//function checks isAlive for true & adds class 'alive'
 			aliveClass(y, x, $cell);
 			$row.append($cell);
@@ -70,73 +71,83 @@ function findNeighbors() {
 			if (y === 0 && 0 < x && x < (cols-1)) {
 				cells[y][x].neighbors = [ cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
 				//console.log(cells[y][x].neighbors);
-				cells[y][x].isAlive = false;
+				//cells[y][x].isAlive = false;
 			}
 			//neighbors for cells at bottom edge of grid
 			else if (y === (rows-1) && 0 < x && x < (cols-1)) {
 				cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1] ];
 				//console.log(cells[y][x].neighbors);
-				cells[y][x].isAlive = false;				
+				//cells[y][x].isAlive = false;				
 			}
 
 			//neighbors for cells on left edge of grid
 			else if (0 < y && y < (rows-1) && x === 0) {
 				cells[y][x].neighbors = [ cells[y-1][x], cells[y-1][x+1], cells[y][x+1], cells[y+1][x], cells[y+1][x+1] ];
 				//console.log(cells[y][x].neighbors);
-				cells[y][x].isAlive = false;
+				//cells[y][x].isAlive = false;
 			}
 			
 			//neighbors for cells on right edge of grid
 			else if (0 < y && y < (rows-1) && x === (cols-1)) {
 				cells[y][x].neighbors = [ cells[y-1][x], cells[y-1][x-1], cells[y][x-1], cells[y+1][x], cells[y+1][x-1] ];
 				//console.log(cells[y][x].neighbors);
-				cells[y][x].isAlive = false;
+				//cells[y][x].isAlive = false;
 			}
 
 			//neighbors for upper left corner cell
 			else if (y === 0 && x === 0) {
 				cells[y][x].neighbors = [ cells[y][x+1], cells[y+1][x+1], cells[y+1][x] ];
-				console.log(cells[y][x].neighbors);
-				cells[y][x].isAlive = true;
+				// console.log(cells[y][x].neighbors);
+				// cells[y][x].isAlive = true;
 			}
 
 			//neighbors for upper right corner cell
 			else if (y === 0 && x === (cols-1)) {
 				cells[y][x].neighbors = [ cells[y][x-1], cells[y+1][x-1], cells[y+1][x] ];
-				console.log(cells[y][x].neighbors);
-				cells[y][x].isAlive = true;
+				// console.log(cells[y][x].neighbors);
+				// cells[y][x].isAlive = true;
 			}
 
 			//neighbors for lower left corner cell
 			else if (y === (rows-1) && x === 0) {
 				cells[y][x].neighbors = [ cells[y][x+1], cells[y-1][x+1], cells[y-1][x] ];
-				console.log(cells[y][x].neighbors);
-				cells[y][x].isAlive = true;
+				// console.log(cells[y][x].neighbors);
+				// cells[y][x].isAlive = true;
 			}
 
 			//neighbors for lower right corner cell
 			else if (y === (rows-1) && x === (cols-1)) {
 				cells[y][x].neighbors = [ cells[y][x-1], cells[y-1][x-1], cells[y-1][x] ];
-				console.log(cells[y][x].neighbors);
-				cells[y][x].isAlive = true;
+				// console.log(cells[y][x].neighbors);
+				// cells[y][x].isAlive = true;
 			}
 			
 			//neighbors for all middle cells
 			else {
 
 				cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
-				console.log(cells[y][x].neighbors);
-				cells[y][x].isAlive = false;
+				//console.log(cells[y][x].neighbors);
+				cells[y][x].isAlive = true;
 			}
 		}
 	}
 }
 
 
-
-
-//function that computes the number of alive neighbors for each cell (this needs to happen after all the cells are created)
-// ie after cellCreator()
+//function that takes a cell obj & returns the number of alive neighbors
+function numAliveNeighbors(cell) {
+	numAlive = 0;
+	console.log(cell);
+	var neighbors = cell.neighbors;
+	console.log(neighbors);
+	for (n in neighbors) {
+		if (neighbors[n].isAlive === true) {
+			numAlive += 1;
+		}
+	}
+	console.log(numAlive);
+	return numAlive;
+}
 
 //function that updates the CSS class using jQuery addClass, removeClass every frame depending on when its alive or dead
 function aliveClass(y, x, $cell) {
@@ -159,10 +170,12 @@ function aliveClass(y, x, $cell) {
 //FYI -- syntax declaring empty array could be source of bugs in future
 var cells = [];
 
-var cols = 4;
-var rows = 4;
+var cols = 5;
+var rows = 5;
 
 cellCreator(rows, cols);
 findNeighbors();
+
 cellDisplay();
-generation();
+//numAliveNeighbors(cells[2][3]);
+//generation();

@@ -30,6 +30,7 @@ h2, h3, h4, h5, p, a, button, input {
 	text-decoration: none;
 	border: dashed 1px;
 	padding: 10px;
+	cursor: pointer;
 	&:hover {
 		background: black;
 		color: white;

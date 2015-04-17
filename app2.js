@@ -18,13 +18,16 @@ function cellCreator(rows, cols) {
 	}
 }
 
+//var $grid = [];
+
+//need to give each cell an id in the DOM
 function cellDisplay() {
 	var $grid = $("<table>");
 	for (y in cells) {
 		var $row = $('<tr>');
 		$grid.append($row);
 		for (x in cells[y]) {
-			var $cell = $('<td>');
+			var $cell = $('<td id="something">');
 			$cell.append($('<p>'+ y +', ' + x +'</p>'));
 			//function checks isAlive for true & adds class 'alive'
 			aliveClass(y, x, $cell);
@@ -32,6 +35,7 @@ function cellDisplay() {
 		}
 	}
 	$('#board').append($grid).addClass('grid');
+	//return $grid;
 }
 
 //this function runs every frame of the game and will update the css class of the cell
@@ -48,6 +52,7 @@ function generation() {
 	    		// Any live cell with two or three live neighbours lives on to the next generation.
 	    		else if (cells[y][x].numNeighbors === 2 || cells[y][x].num_neighbors === 3 ) {
 					cells[y][x].isAlive = true;
+					aliveClass(y, x, $cell);
 				}
 	    		// Any live cell with more than three live neighbours dies, as if by overcrowding.
 	    		else if (cells[y][x].numNeighbors > 3) {
@@ -58,6 +63,7 @@ function generation() {
 	    		// Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.	
 	    		if (cells[y][x].numNeighbors === 3) {
 	    			cells[y][x].isAlive = true;
+	    			aliveClass(y, x, $cell);
 	    		}
     		}
     		//update the display each frame?
@@ -161,6 +167,26 @@ function aliveClass(y, x, $cell) {
     }
 }
 
+
+//THOUGHT -- need to give each cell obj a cell.id css id in the cellDisplay function. Then 
+
+//want this to iterate through the cell DOM elements & add class 'alive' whenever cells[y][x].isAlive === true and removes class alive when false
+function aliveCheck() {
+//.EACH() -- TRY THIS TO UPDATE THE TD'S
+// $( "tr" ).each( function( index, element ){
+//     console.log( $( this ).text() );
+// });
+//Look at this for more info:  https://learn.jquery.com/using-jquery-core/iterating/
+
+//FIRST ATTEMPT
+	// for (y in cells) {
+	// 	for (x in cells[y]) {
+	// 		$currentRow = $('tr')[y];
+	// 		$currentRow.addClass('alive');
+	// 	}
+	// }
+}
+
 //sets up which cells start out alive
 function aliveInit() {
 	for (y in cells) {
@@ -173,17 +199,20 @@ function aliveInit() {
 	}
 }
 
-
-// future ideas  -- change cells alive or nah on click
-
 //start function that starts playing onclick
-
-	// setInterval(function() {
- //          // Do something every 2 seconds
- //          // call generation frame function
- //    }, 2000);
-
-
+function autoUpdate() {
+	console.log(autoUpdate);
+// 	table = $('#board');
+// 	for (var y = 0, row; row = table.rows[y]; y++) {
+//    //iterate through rows
+//    //rows would be accessed using the "row" variable assigned in the for loop
+//    	console.log('numRows is '+y);
+//    for (var x = 0, col; col = row.cells[x]; x++) {
+//      //iterate through columns
+//      //columns would be accessed using the "col" variable assigned in the for loop
+//    }  
+// }
+}
 
 //FYI -- syntax declaring empty array (single instead of double) could be source of bugs in future
 var cells = [];
@@ -192,31 +221,37 @@ var cols = 10;
 var rows = 10;
 
 cellCreator(rows, cols);
-aliveInit();
+//aliveInit() currently only works before cellDisplay() is called 
+//aliveInit();
 cellDisplay();
 findNeighbors();
-//aliveInit();
+aliveCheck();
+cells[4][3].isAlive = true;
+console.log($grid);
 
-numAliveNeighbors(cells[2][3]);
-console.log(cells[2][3].numNeighbors);
+// numAliveNeighbors(cells[2][3]);
+// console.log(cells[2][3].numNeighbors);
+
 //generation();
 
 
 
 //Both of these work to console log kittens but not to make cells[y][x].isAlive true. Have tried this code outside of document ready, and before and after defining all variables and calling all functions
-// $(document).ready(function() {
-
 
 // function play() {
 // 	console.log('kittens');
 // 	cells[4][3].isAlive = true;
 // }
 
-// $('#playBtn').click(function() {
-// 	console.log('kittens');
-// 	cells[4][3].isAlive = true;
-// });
+$('#playBtn').click(function() {
+	console.log('kittens');
+	//generation();
+	cells[4][3].isAlive = true;
+	aliveCheck($grid);
+	//cellDisplay();
+});
 
-// }); 
-
-
+	setInterval(function() {
+		autoUpdate;
+          //console.log('squid');
+    }, 2000);

@@ -223,10 +223,11 @@ function aliveClass(y, x, $cell) {
 //THOUGHT -- need to give each cell obj a cell.id css id in the cellDisplay function. Then 
 
 //want this to iterate through the cell DOM elements & add class 'alive' whenever cells[y][x].isAlive === true and removes class alive when false
-function aliveCheck() {
+function aliveCheck(y, x) {
 //.EACH() -- TRY THIS TO UPDATE THE TD'S
 $( "td" ).each( function( index, element ){
-    console.log( $( this ).text() );
+	console.log( $(this).text() );
+    $( this ).css('background', 'yellow');
 });
 //Look at this for more info:  https://learn.jquery.com/using-jquery-core/iterating/
 

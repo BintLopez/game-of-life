@@ -18,8 +18,6 @@ function cellCreator(rows, cols) {
 	}
 }
 
-//var $grid = [];
-
 //need to give each cell an id in the DOM
 function cellDisplay() {
 	var $grid = $("<table>");
@@ -35,45 +33,10 @@ function cellDisplay() {
 		}
 	}
 	$('#board').append($grid).addClass('grid');
-	//return $grid;
-}
-
-//this function runs every frame of the game and will update the css class of the cell
-function generation() {
-	//var numAlive = 0;
-    for (y in cells) {
-    	for (x in cells[y]) {
-    		numAliveNeighbors(cells[y][x]);
-    		if (cells[y][x].isAlive === true) {
-    		// Any live cell with fewer than two live neighbours dies, as if caused by under-population.
-	    		if (cells[y][x].numNeighbors < 2) {
-	    			cells[y][x].isAlive = false;
-	    		}
-	    		// Any live cell with two or three live neighbours lives on to the next generation.
-	    		else if (cells[y][x].numNeighbors === 2 || cells[y][x].num_neighbors === 3 ) {
-					cells[y][x].isAlive = true;
-					aliveClass(y, x, $cell);
-				}
-	    		// Any live cell with more than three live neighbours dies, as if by overcrowding.
-	    		else if (cells[y][x].numNeighbors > 3) {
-	    			cells[y][x].isAlive = false;
-	    		}
-    		}
-    		else {
-	    		// Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.	
-	    		if (cells[y][x].numNeighbors === 3) {
-	    			cells[y][x].isAlive = true;
-	    			aliveClass(y, x, $cell);
-	    		}
-    		}
-    		//update the display each frame?
-    		//cellDisplay();
-    		//aliveClass();
-    	}
-    }
 }
 
 //finds the neighbors for each cell given its coordinates
+//should refactor this to take a cells y and x and return array of neighbors -- purpose of this is to take neighbors array out of the cell object
 function findNeighbors(y, x) {
 
 	//neighbors for cells at top edge of grid
@@ -120,7 +83,6 @@ function findNeighbors(y, x) {
 		cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
 	}
 	console.log(cells[y][x].neighbors);
-	//cells[y][x].isAlive = true;
 }
 
 //function that takes a cell obj & returns the number of alive neighbors
@@ -145,29 +107,11 @@ function aliveClass(y, x, $cell) {
     }
 }
 
-
-//THOUGHT -- need to give each cell obj a cell.id css id in the cellDisplay function. Then 
-
-//want this to iterate through the cell DOM elements & add class 'alive' whenever cells[y][x].isAlive === true and removes class alive when false
+//given cell's coordinates checks if cell is alive & adds class alive
 function aliveCheck(y, x) {
 	if (cells[y][x].isAlive === true) {
 		$('#cell_'+ y +'_' + x).addClass('alive');
 	}
-
-//.EACH() -- TRY THIS TO UPDATE THE TD'S
-// $( "td" ).each( function( index, element ){
-// 	console.log( $(this).text() );
-//     $( this ).css('background', 'yellow');
-// });
-//Look at this for more info:  https://learn.jquery.com/using-jquery-core/iterating/
-
-//FIRST ATTEMPT
-	// for (y in cells) {
-	// 	for (x in cells[y]) {
-	// 		$currentRow = $('tr')[y];
-	// 		$currentRow.addClass('alive');
-	// 	}
-	// }
 }
 
 //sets up which cells start out alive
@@ -182,19 +126,45 @@ function aliveInit() {
 	}
 }
 
+//this function runs every frame of the game and will update the css class of the cell
+function generation() {
+	//var numAlive = 0;
+    for (y in cells) {
+    	for (x in cells[y]) {
+    		numAliveNeighbors(cells[y][x]);
+    		if (cells[y][x].isAlive === true) {
+    		// Any live cell with fewer than two live neighbours dies, as if caused by under-population.
+	    		if (cells[y][x].numNeighbors < 2) {
+	    			cells[y][x].isAlive = false;
+	    		}
+	    		// Any live cell with two or three live neighbours lives on to the next generation.
+	    		else if (cells[y][x].numNeighbors === 2 || cells[y][x].num_neighbors === 3 ) {
+					cells[y][x].isAlive = true;
+					aliveClass(y, x, $cell);
+				}
+	    		// Any live cell with more than three live neighbours dies, as if by overcrowding.
+	    		else if (cells[y][x].numNeighbors > 3) {
+	    			cells[y][x].isAlive = false;
+	    		}
+    		}
+    		else {
+	    		// Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.	
+	    		if (cells[y][x].numNeighbors === 3) {
+	    			cells[y][x].isAlive = true;
+	    			aliveClass(y, x, $cell);
+	    		}
+    		}
+    		//update the display each frame?
+    		//cellDisplay();
+    		//aliveClass();
+    	}
+    }
+}
+
 //start function that starts playing onclick
 function autoUpdate() {
 	console.log(autoUpdate);
-// 	table = $('#board');
-// 	for (var y = 0, row; row = table.rows[y]; y++) {
-//    //iterate through rows
-//    //rows would be accessed using the "row" variable assigned in the for loop
-//    	console.log('numRows is '+y);
-//    for (var x = 0, col; col = row.cells[x]; x++) {
-//      //iterate through columns
-//      //columns would be accessed using the "col" variable assigned in the for loop
-//    }  
-// }
+
 }
 
 //FYI -- syntax declaring empty array (single instead of double) could be source of bugs in future

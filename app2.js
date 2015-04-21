@@ -1,4 +1,4 @@
-var config = {};
+ var config = {};
 
 function Cell(config, x, y) {
     config = config || {};
@@ -27,7 +27,7 @@ function cellDisplay() {
 		var $row = $('<tr>');
 		$grid.append($row);
 		for (x in cells[y]) {
-			var $cell = $('<td id="something">');
+			var $cell = $('<td id="cell_'+ y +'_' + x +'">');
 			$cell.append($('<p>'+ y +', ' + x +'</p>'));
 			//function checks isAlive for true & adds class 'alive'
 			aliveClass(y, x, $cell);
@@ -74,6 +74,7 @@ function generation() {
 }
 
 //finds the neighbors for each cell
+//REFACTOR THIS = remove the for loops, pass the function arguments of y, x coordinates and return the neighbors array
 function findNeighbors() {
 	for (var y=0; y<rows; y++) {
 		for (var x=0; x<cols; x++) {
@@ -173,7 +174,7 @@ function aliveClass(y, x, $cell) {
 //want this to iterate through the cell DOM elements & add class 'alive' whenever cells[y][x].isAlive === true and removes class alive when false
 function aliveCheck() {
 //.EACH() -- TRY THIS TO UPDATE THE TD'S
-// $( "tr" ).each( function( index, element ){
+// $( "td" ).each( function( index, element ){
 //     console.log( $( this ).text() );
 // });
 //Look at this for more info:  https://learn.jquery.com/using-jquery-core/iterating/

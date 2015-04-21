@@ -115,15 +115,15 @@ function aliveCheck(y, x) {
 }
 
 //sets up which cells start out alive
+//TO DO -- WANT TO PASS THIS A SET NUMBER OF ALIVE CELLS TO START
 function aliveInit() {
-	for (y in cells) {
-		for (x in cells[y]) {
-			//eventually make this randomized
-			if (x % 2 === 0) {
-				cells[y][x].isAlive = true;
-			}
-		}
-	}
+	console.log("kittens");
+	y = Math.floor(Math.random() * (rows - 0) + 0);
+	x = Math.floor(Math.random() * (cols - 0) + 0);
+	console.log("y is "+ y);
+	console.log("x is "+ x);
+	cells[y][x].isAlive = true;
+	aliveCheck(y, x);
 }
 
 //this function runs every frame of the game and will update the css class of the cell
@@ -178,9 +178,11 @@ cellCreator(rows, cols);
 //aliveInit();
 cellDisplay();
 //findNeighbors(0, 0);
-cells[4][3].isAlive = true;
-aliveCheck(4, 3);
-console.log($grid);
+// cells[4][3].isAlive = true;
+// aliveCheck(4, 3);
+// console.log($grid);
+
+aliveInit();
 
 // numAliveNeighbors(cells[2][3]);
 // console.log(cells[2][3].numNeighbors);

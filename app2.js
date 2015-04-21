@@ -75,75 +75,126 @@ function generation() {
 
 //finds the neighbors for each cell
 //REFACTOR THIS = remove the for loops, pass the function arguments of y, x coordinates and return the neighbors array
-function findNeighbors() {
-	for (var y=0; y<rows; y++) {
-		for (var x=0; x<cols; x++) {
+// function findNeighbors() {
+// 	for (var y=0; y<rows; y++) {
+// 		for (var x=0; x<cols; x++) {
 
-			//neighbors for cells at top edge of grid
-			if (y === 0 && 0 < x && x < (cols-1)) {
-				cells[y][x].neighbors = [ cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
-				//console.log(cells[y][x].neighbors);
-				//cells[y][x].isAlive = false;
-			}
-			//neighbors for cells at bottom edge of grid
-			else if (y === (rows-1) && 0 < x && x < (cols-1)) {
-				cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1] ];
-				//console.log(cells[y][x].neighbors);
-				//cells[y][x].isAlive = false;				
-			}
+// 			//neighbors for cells at top edge of grid
+// 			if (y === 0 && 0 < x && x < (cols-1)) {
+// 				cells[y][x].neighbors = [ cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
+// 				//console.log(cells[y][x].neighbors);
+// 				//cells[y][x].isAlive = false;
+// 			}
+// 			//neighbors for cells at bottom edge of grid
+// 			else if (y === (rows-1) && 0 < x && x < (cols-1)) {
+// 				cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1] ];
+// 				//console.log(cells[y][x].neighbors);
+// 				//cells[y][x].isAlive = false;				
+// 			}
 
-			//neighbors for cells on left edge of grid
-			else if (0 < y && y < (rows-1) && x === 0) {
-				cells[y][x].neighbors = [ cells[y-1][x], cells[y-1][x+1], cells[y][x+1], cells[y+1][x], cells[y+1][x+1] ];
-				//console.log(cells[y][x].neighbors);
-				//cells[y][x].isAlive = false;
-			}
+// 			//neighbors for cells on left edge of grid
+// 			else if (0 < y && y < (rows-1) && x === 0) {
+// 				cells[y][x].neighbors = [ cells[y-1][x], cells[y-1][x+1], cells[y][x+1], cells[y+1][x], cells[y+1][x+1] ];
+// 				//console.log(cells[y][x].neighbors);
+// 				//cells[y][x].isAlive = false;
+// 			}
 			
-			//neighbors for cells on right edge of grid
-			else if (0 < y && y < (rows-1) && x === (cols-1)) {
-				cells[y][x].neighbors = [ cells[y-1][x], cells[y-1][x-1], cells[y][x-1], cells[y+1][x], cells[y+1][x-1] ];
-				//console.log(cells[y][x].neighbors);
-				//cells[y][x].isAlive = false;
-			}
+// 			//neighbors for cells on right edge of grid
+// 			else if (0 < y && y < (rows-1) && x === (cols-1)) {
+// 				cells[y][x].neighbors = [ cells[y-1][x], cells[y-1][x-1], cells[y][x-1], cells[y+1][x], cells[y+1][x-1] ];
+// 				//console.log(cells[y][x].neighbors);
+// 				//cells[y][x].isAlive = false;
+// 			}
 
-			//neighbors for upper left corner cell
-			else if (y === 0 && x === 0) {
-				cells[y][x].neighbors = [ cells[y][x+1], cells[y+1][x+1], cells[y+1][x] ];
-				// console.log(cells[y][x].neighbors);
-				// cells[y][x].isAlive = true;
-			}
+// 			//neighbors for upper left corner cell
+// 			else if (y === 0 && x === 0) {
+// 				cells[y][x].neighbors = [ cells[y][x+1], cells[y+1][x+1], cells[y+1][x] ];
+// 				// console.log(cells[y][x].neighbors);
+// 				// cells[y][x].isAlive = true;
+// 			}
 
-			//neighbors for upper right corner cell
-			else if (y === 0 && x === (cols-1)) {
-				cells[y][x].neighbors = [ cells[y][x-1], cells[y+1][x-1], cells[y+1][x] ];
-				// console.log(cells[y][x].neighbors);
-				// cells[y][x].isAlive = true;
-			}
+// 			//neighbors for upper right corner cell
+// 			else if (y === 0 && x === (cols-1)) {
+// 				cells[y][x].neighbors = [ cells[y][x-1], cells[y+1][x-1], cells[y+1][x] ];
+// 				// console.log(cells[y][x].neighbors);
+// 				// cells[y][x].isAlive = true;
+// 			}
 
-			//neighbors for lower left corner cell
-			else if (y === (rows-1) && x === 0) {
-				cells[y][x].neighbors = [ cells[y][x+1], cells[y-1][x+1], cells[y-1][x] ];
-				// console.log(cells[y][x].neighbors);
-				// cells[y][x].isAlive = true;
-			}
+// 			//neighbors for lower left corner cell
+// 			else if (y === (rows-1) && x === 0) {
+// 				cells[y][x].neighbors = [ cells[y][x+1], cells[y-1][x+1], cells[y-1][x] ];
+// 				// console.log(cells[y][x].neighbors);
+// 				// cells[y][x].isAlive = true;
+// 			}
 
-			//neighbors for lower right corner cell
-			else if (y === (rows-1) && x === (cols-1)) {
-				cells[y][x].neighbors = [ cells[y][x-1], cells[y-1][x-1], cells[y-1][x] ];
-				// console.log(cells[y][x].neighbors);
-				// cells[y][x].isAlive = true;
-			}
+// 			//neighbors for lower right corner cell
+// 			else if (y === (rows-1) && x === (cols-1)) {
+// 				cells[y][x].neighbors = [ cells[y][x-1], cells[y-1][x-1], cells[y-1][x] ];
+// 				// console.log(cells[y][x].neighbors);
+// 				// cells[y][x].isAlive = true;
+// 			}
 			
-			//neighbors for all middle cells
-			else {
+// 			//neighbors for all middle cells
+// 			else {
 
-				cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
-				//console.log(cells[y][x].neighbors);
-				//cells[y][x].isAlive = true;
-			}
-		}
+// 				cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
+// 				//console.log(cells[y][x].neighbors);
+// 				//cells[y][x].isAlive = true;
+// 			}
+// 		}
+// 	}
+// }
+
+function findNeighbors(y, x) {
+
+	//neighbors for cells at top edge of grid
+	if (y === 0 && 0 < x && x < (cols-1)) {
+		cells[y][x].neighbors = [ cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
 	}
+	//neighbors for cells at bottom edge of grid
+	else if (y === (rows-1) && 0 < x && x < (cols-1)) {
+		cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1] ];				
+	}
+
+	//neighbors for cells on left edge of grid
+	else if (0 < y && y < (rows-1) && x === 0) {
+		cells[y][x].neighbors = [ cells[y-1][x], cells[y-1][x+1], cells[y][x+1], cells[y+1][x], cells[y+1][x+1] ];
+	}
+			
+	//neighbors for cells on right edge of grid
+	else if (0 < y && y < (rows-1) && x === (cols-1)) {
+		cells[y][x].neighbors = [ cells[y-1][x], cells[y-1][x-1], cells[y][x-1], cells[y+1][x], cells[y+1][x-1] ];
+	}
+
+	//neighbors for upper left corner cell
+	else if (y === 0 && x === 0) {
+		cells[y][x].neighbors = [ cells[y][x+1], cells[y+1][x+1], cells[y+1][x] ];
+	}
+
+	//neighbors for upper right corner cell
+	else if (y === 0 && x === (cols-1)) {
+		cells[y][x].neighbors = [ cells[y][x-1], cells[y+1][x-1], cells[y+1][x] ];
+	}
+
+	//neighbors for lower left corner cell
+	else if (y === (rows-1) && x === 0) {
+		cells[y][x].neighbors = [ cells[y][x+1], cells[y-1][x+1], cells[y-1][x] ];
+	}
+
+	//neighbors for lower right corner cell
+	else if (y === (rows-1) && x === (cols-1)) {
+		cells[y][x].neighbors = [ cells[y][x-1], cells[y-1][x-1], cells[y-1][x] ];
+	}
+			
+	//neighbors for all middle cells
+	else {
+		cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
+	}
+	console.log(cells[y][x].neighbors);
+	//cells[y][x].isAlive = true;
 }
+
+
 
 
 //function that takes a cell obj & returns the number of alive neighbors
@@ -174,9 +225,9 @@ function aliveClass(y, x, $cell) {
 //want this to iterate through the cell DOM elements & add class 'alive' whenever cells[y][x].isAlive === true and removes class alive when false
 function aliveCheck() {
 //.EACH() -- TRY THIS TO UPDATE THE TD'S
-// $( "td" ).each( function( index, element ){
-//     console.log( $( this ).text() );
-// });
+$( "td" ).each( function( index, element ){
+    console.log( $( this ).text() );
+});
 //Look at this for more info:  https://learn.jquery.com/using-jquery-core/iterating/
 
 //FIRST ATTEMPT
@@ -225,7 +276,7 @@ cellCreator(rows, cols);
 //aliveInit() currently only works before cellDisplay() is called 
 //aliveInit();
 cellDisplay();
-findNeighbors();
+//findNeighbors(0, 0);
 aliveCheck();
 cells[4][3].isAlive = true;
 console.log($grid);

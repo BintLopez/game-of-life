@@ -27,8 +27,6 @@ function cellDisplay() {
 		for (x in cells[y]) {
 			var $cell = $('<td id="cell_'+ y +'_' + x +'">');
 			$cell.append($('<p>'+ y +', ' + x +'</p>'));
-			//function checks isAlive for true & adds class 'alive'
-			aliveClass(y, x, $cell);
 			$row.append($cell);
 		}
 	}
@@ -109,14 +107,15 @@ function aliveCheck(y, x) {
 
 //sets up which cells start out alive
 //TO DO -- WANT TO PASS THIS A SET NUMBER OF ALIVE CELLS TO START
-function aliveInit() {
-	console.log("kittens");
-	y = Math.floor(Math.random() * (rows - 0) + 0);
-	x = Math.floor(Math.random() * (cols - 0) + 0);
-	console.log("y is "+ y);
-	console.log("x is "+ x);
-	cells[y][x].isAlive = true;
-	aliveCheck(y, x);
+function aliveInit(numAliveStart) {
+	for (var i = 0; i < numAliveStart; i++) {
+		y = Math.floor(Math.random() * (rows - 0) + 0);
+		x = Math.floor(Math.random() * (cols - 0) + 0);
+		// console.log("y is "+ y);
+		// console.log("x is "+ x);
+		cells[y][x].isAlive = true;
+		aliveCheck(y, x);
+	}
 }
 
 //this takes a cell's coordinates & # of neighbors & determines whether the cell lives, dies, or regenerates for the next round 
@@ -143,7 +142,7 @@ function generation(y, x) {
 	    	aliveClass(y, x, $cell);
 	    }
     }
-    aliveCheck(y, x);
+    aliveClass(y, x);
 }
 
 //start function that starts playing onclick
@@ -157,6 +156,7 @@ var cells = [];
 
 var cols = 10;
 var rows = 10;
+var numAliveStart = cols * rows / 2;
 
 cellCreator(rows, cols);
 //aliveInit() currently only works before cellDisplay() is called 
@@ -167,7 +167,7 @@ cellDisplay();
 // aliveCheck(4, 3);
 // console.log($grid);
 
-aliveInit();
+aliveInit(numAliveStart);
 
 // numAliveNeighbors(cells[2][3]);
 // console.log(cells[2][3].numNeighbors);

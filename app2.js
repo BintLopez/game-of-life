@@ -100,13 +100,6 @@ function numAliveNeighbors(cell) {
 	cell.numNeighbors = i;
 }
 
-//function that sets that checks if cells are alive & adds class alive
-function aliveClass(y, x, $cell) {
-    if (cells[y][x].isAlive === true) {
-    	$cell.addClass('alive');
-    }
-}
-
 //given cell's coordinates checks if cell is alive & adds class alive
 function aliveCheck(y, x) {
 	if (cells[y][x].isAlive === true) {
@@ -126,39 +119,31 @@ function aliveInit() {
 	aliveCheck(y, x);
 }
 
-//this function runs every frame of the game and will update the css class of the cell
-function generation() {
-	//var numAlive = 0;
-    for (y in cells) {
-    	for (x in cells[y]) {
-    		numAliveNeighbors(cells[y][x]);
-    		if (cells[y][x].isAlive === true) {
-    		// Any live cell with fewer than two live neighbours dies, as if caused by under-population.
-	    		if (cells[y][x].numNeighbors < 2) {
-	    			cells[y][x].isAlive = false;
-	    		}
-	    		// Any live cell with two or three live neighbours lives on to the next generation.
-	    		else if (cells[y][x].numNeighbors === 2 || cells[y][x].num_neighbors === 3 ) {
-					cells[y][x].isAlive = true;
-					aliveClass(y, x, $cell);
-				}
-	    		// Any live cell with more than three live neighbours dies, as if by overcrowding.
-	    		else if (cells[y][x].numNeighbors > 3) {
-	    			cells[y][x].isAlive = false;
-	    		}
-    		}
-    		else {
-	    		// Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.	
-	    		if (cells[y][x].numNeighbors === 3) {
-	    			cells[y][x].isAlive = true;
-	    			aliveClass(y, x, $cell);
-	    		}
-    		}
-    		//update the display each frame?
-    		//cellDisplay();
-    		//aliveClass();
-    	}
+//this takes a cell's coordinates & # of neighbors & determines whether the cell lives, dies, or regenerates for the next round 
+function generation(y, x) {
+    if (cells[y][x].isAlive === true) {
+    	// Any live cell with fewer than two live neighbours dies, as if caused by under-population.
+	    if (cells[y][x].numNeighbors < 2) {
+	    	cells[y][x].isAlive = false;
+	    }
+	    // Any live cell with two or three live neighbours lives on to the next generation.
+	    else if (cells[y][x].numNeighbors === 2 || cells[y][x].num_neighbors === 3 ) {
+			cells[y][x].isAlive = true;
+			aliveClass(y, x, $cell);
+		}
+	    // Any live cell with more than three live neighbours dies, as if by overcrowding.
+	   else if (cells[y][x].numNeighbors > 3) {
+	    	cells[y][x].isAlive = false;
+	    }
     }
+    else {
+	    // Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.	
+	    if (cells[y][x].numNeighbors === 3) {
+	    	cells[y][x].isAlive = true;
+	    	aliveClass(y, x, $cell);
+	    }
+    }
+    aliveCheck(y, x);
 }
 
 //start function that starts playing onclick

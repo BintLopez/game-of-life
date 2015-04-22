@@ -84,10 +84,10 @@ function findNeighbors(y, x) {
 }
 
 //function that takes a cell obj & returns the number of alive neighbors
-function numAliveNeighbors(cell) {
+function numAliveNeighbors(y, x) {
 	i = 0;
 	//console.log(cell);
-	var neighbors = cell.neighbors;
+	var neighbors = cells[y][x].neighbors;
 	//console.log(neighbors);
 	for (n in neighbors) {
 		if (neighbors[n].isAlive === true) {
@@ -95,7 +95,7 @@ function numAliveNeighbors(cell) {
 		}
 	}
 	//console.log(numAlive);
-	cell.numNeighbors = i;
+	cells[y][x].numNeighbors = i;
 }
 
 //given cell's coordinates checks if cell is alive & adds class alive
@@ -103,10 +103,12 @@ function aliveCheck(y, x) {
 	if (cells[y][x].isAlive === true) {
 		$('#cell_'+ y +'_' + x).addClass('alive');
 	}
+	else {
+		$('#cell_'+ y +'_' + x).addClass('dead');
+	}
 }
 
-//sets up which cells start out alive
-//TO DO -- WANT TO PASS THIS A SET NUMBER OF ALIVE CELLS TO START
+//sets up which cells start out alive given the value numAliveStart -- this variable is defined as half the amount of cells in the grid
 function aliveInit(numAliveStart) {
 	for (var i = 0; i < numAliveStart; i++) {
 		y = Math.floor(Math.random() * (rows - 0) + 0);
@@ -142,7 +144,7 @@ function generation(y, x) {
 	    	aliveClass(y, x, $cell);
 	    }
     }
-    aliveClass(y, x);
+    aliveCheck(y, x);
 }
 
 //start function that starts playing onclick
@@ -153,21 +155,46 @@ function autoUpdate() {
 
 //FYI -- syntax declaring empty array (single instead of double) could be source of bugs in future
 var cells = [];
-
-var cols = 10;
-var rows = 10;
+var cols = 4;
+var rows = 6;
 var numAliveStart = cols * rows / 2;
 
+//create cell objects
 cellCreator(rows, cols);
-//aliveInit() currently only works before cellDisplay() is called 
-//aliveInit();
+
+//display cells in grid
 cellDisplay();
+
+//initiate which cells start out alive
+//aliveInit(numAliveStart);
+
+
+cells[0][0].isAlive = true;
+cells[0][1].isAlive = true;
+cells[2][2].isAlive = true;
+cells[3][0].isAlive = true;
+cells[4][1].isAlive = true;
+cells[4][3].isAlive = true;
+cells[5][2].isAlive = true;
+cells[5][3].isAlive = true;
+
+for (y in cells) {
+	for (x in cells[y]) {
+		aliveCheck(y, x);
+	}
+}
+
+for (y in cells) {
+	for (x in cells[y]) {
+
+	}
+}
+
+
 //findNeighbors(0, 0);
 // cells[4][3].isAlive = true;
 // aliveCheck(4, 3);
 // console.log($grid);
-
-aliveInit(numAliveStart);
 
 // numAliveNeighbors(cells[2][3]);
 // console.log(cells[2][3].numNeighbors);
@@ -184,11 +211,11 @@ aliveInit(numAliveStart);
 // }
 
 $('#playBtn').click(function() {
-	console.log('kittens');
-	//generation();
-	cells[4][3].isAlive = true;
-	aliveCheck($grid);
-	//cellDisplay();
+	for (y in cells) {
+		for (x in cells[y]) {
+			generation(y, x);
+		}
+	}
 });
 
 	setInterval(function() {

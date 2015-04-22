@@ -39,48 +39,49 @@ function findNeighbors(y, x) {
 
 	//neighbors for cells at top edge of grid
 	if (y === 0 && 0 < x && x < (cols-1)) {
-		cells[y][x].neighbors = [ cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
+		neighbors = [ cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
 	}
 	//neighbors for cells at bottom edge of grid
 	else if (y === (rows-1) && 0 < x && x < (cols-1)) {
-		cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1] ];				
+		neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1] ];				
 	}
 
 	//neighbors for cells on left edge of grid
 	else if (0 < y && y < (rows-1) && x === 0) {
-		cells[y][x].neighbors = [ cells[y-1][x], cells[y-1][x+1], cells[y][x+1], cells[y+1][x], cells[y+1][x+1] ];
+		neighbors = [ cells[y-1][x], cells[y-1][x+1], cells[y][x+1], cells[y+1][x], cells[y+1][x+1] ];
 	}
 			
 	//neighbors for cells on right edge of grid
 	else if (0 < y && y < (rows-1) && x === (cols-1)) {
-		cells[y][x].neighbors = [ cells[y-1][x], cells[y-1][x-1], cells[y][x-1], cells[y+1][x], cells[y+1][x-1] ];
+		neighbors = [ cells[y-1][x], cells[y-1][x-1], cells[y][x-1], cells[y+1][x], cells[y+1][x-1] ];
 	}
 
 	//neighbors for upper left corner cell
 	else if (y === 0 && x === 0) {
-		cells[y][x].neighbors = [ cells[y][x+1], cells[y+1][x+1], cells[y+1][x] ];
+		neighbors = [ cells[y][x+1], cells[y+1][x+1], cells[y+1][x] ];
 	}
 
 	//neighbors for upper right corner cell
 	else if (y === 0 && x === (cols-1)) {
-		cells[y][x].neighbors = [ cells[y][x-1], cells[y+1][x-1], cells[y+1][x] ];
+		neighbors = [ cells[y][x-1], cells[y+1][x-1], cells[y+1][x] ];
 	}
 
 	//neighbors for lower left corner cell
 	else if (y === (rows-1) && x === 0) {
-		cells[y][x].neighbors = [ cells[y][x+1], cells[y-1][x+1], cells[y-1][x] ];
+		neighbors = [ cells[y][x+1], cells[y-1][x+1], cells[y-1][x] ];
 	}
 
 	//neighbors for lower right corner cell
 	else if (y === (rows-1) && x === (cols-1)) {
-		cells[y][x].neighbors = [ cells[y][x-1], cells[y-1][x-1], cells[y-1][x] ];
+		neighbors = [ cells[y][x-1], cells[y-1][x-1], cells[y-1][x] ];
 	}
 			
 	//neighbors for all middle cells
 	else {
-		cells[y][x].neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
+		neighbors = [ cells[y-1][x-1], cells[y-1][x], cells[y-1][x+1], cells[y][x-1], cells[y][x+1], cells[y+1][x-1], cells[y+1][x], cells[y+1][x+1] ];
 	}
-	console.log(cells[y][x].neighbors);
+	console.log(neighbors);
+	return neighbors;
 }
 
 //function that takes a cell obj & returns the number of alive neighbors
@@ -191,7 +192,6 @@ for (y in cells) {
 }
 
 
-//findNeighbors(0, 0);
 // cells[4][3].isAlive = true;
 // aliveCheck(4, 3);
 // console.log($grid);

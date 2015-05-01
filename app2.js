@@ -1,6 +1,6 @@
- var config = {};
+var config = {};
 
-function Cell(config, x, y) {
+var Cell = function(config, x, y) {
     config = config || {};
     this.x = x;
     this.y = y; 
@@ -9,7 +9,7 @@ function Cell(config, x, y) {
 };
 
 //creates instances of the cell object based on amount of rows, cols in grid
-function cellCreator(rows, cols) {
+var cellCreator = function(rows, cols) {
 	for (var y=0; y<rows; y++) {
 		cells[y] = [];
 		for (var x=0; x<cols; x++) {
@@ -19,7 +19,7 @@ function cellCreator(rows, cols) {
 }	
 
 //need to give each cell an id in the DOM
-function cellDisplay() {
+var cellDisplay = function() {
 	var $grid = $("<table>");
 	for (var y = 0; y < cells.length; y++) {
 		var $row = $('<tr>');
@@ -33,8 +33,8 @@ function cellDisplay() {
 }
 
 //finds the neighbors for each cell given its coordinates
-//should refactor this to take a cells y and x and return array of neighbors -- purpose of this is to take neighbors array out of the cell object
-function findNeighbors(y, x) {
+//need to refactor this to make DRY
+var findNeighbors = function(y, x) {
 	//console.log("kittens inside the findNeighbors function!")
 
 	//neighbors for cells at top edge of grid
@@ -85,7 +85,6 @@ function findNeighbors(y, x) {
 }
 
 //function that takes a cell obj & returns the number of alive neighbors
-//CHANGE THIS... PHASE OUT CELLS.NEIGHBORS 
 var numAliveNeighbors = function(neighbors, y, x) {
 	i = 0;
 	for (var n = 0; n < neighbors.length; n++) {
@@ -103,7 +102,6 @@ var aliveCheck = function(y, x) {
 	$thisCell = $('#cell_'+ y +'_' + x);
 	if (cells[y][x].isAlive) {
 		$thisCell.addClass('alive');
-
 	}
 	else {
 		$thisCell.removeClass('alive');
@@ -111,7 +109,7 @@ var aliveCheck = function(y, x) {
 }
 
 //sets up which cells start out alive given the value numAliveStart -- this variable is defined as half the amount of cells in the grid
-function aliveInit(numAliveStart) {
+var aliveInit = function(numAliveStart) {
 	//console.log("kittens inside the aliveInit function!")
 	for (var i = 0; i < numAliveStart; i++) {
 		y = Math.floor(Math.random() * (rows - 0) + 0);
@@ -124,7 +122,7 @@ function aliveInit(numAliveStart) {
 }
 
 //this takes a cell's coordinates & # of neighbors & determines whether the cell lives, dies, or regenerates for the next round 
-function generation(numAlive, y, x) {
+var generation = function(numAlive, y, x) {
 	//console.log("kittens inside the generation function!")
     if (cells[y][x].isAlive === true) {
     	// console.log('cell '+ y + ', '+x+' is alive');
@@ -145,7 +143,7 @@ function generation(numAlive, y, x) {
 	    }
     }
     else {
-    	console.log('cell '+ y + ', '+x+' is dead');
+    	//console.log('cell '+ y + ', '+x+' is dead');
 	    // Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.	
 	    if (numAlive === 3) {
 	    	// console.log('cell '+y+', '+x+' has exactly 3 alive neighbors')
@@ -155,28 +153,26 @@ function generation(numAlive, y, x) {
     aliveCheck(y, x);
 }
 
-//start function that starts playing onclick
-function gameFrame() {
+//function to updates the generation
+var gameFrame = function() {
 	for (var y = 0; y < cells.length; y++) {
 		for (var x = 0; x < cells[y].length; x++) {	
 			var neighbors = findNeighbors(y, x);
-			//console.log(neighbors);
 			var numAlive = numAliveNeighbors(neighbors, y, x);
-			//console.log(numAlive);
 			generation(numAlive, y, x);
 		}
 	}
 }
 
-function play() {
+//start function that starts playing onclick
+var play = function() {
 	gameFrame();
-	//console.log('click');
 	setInterval(function() {
 		gameFrame();
     }, 2000);
 }
 
-function testInit() {
+var testInit = function() {
 	//TESTING GRID
 	cells[0][0].isAlive = true;
 	cells[0][1].isAlive = true;
@@ -194,11 +190,10 @@ function testInit() {
 	}
 }
 
-
-//FYI -- syntax declaring empty array (single instead of double) could be source of bugs in future
+//set up my grid
 var cells = [];
-var cols = 20;
-var rows = 20;
+var cols = 100;
+var rows = 50;
 var numAliveStart = cols * rows / 2;
 
 //create cell objects
@@ -214,32 +209,3 @@ aliveInit(numAliveStart);
 
 $('#playBtn').click(play);
 
-
-// findNeighbors(1,3);
-// console.log(neighbors);
-
-
-
-
-
-// cells[4][3].isAlive = true;
-// aliveCheck(4, 3);
-
-// numAliveNeighbors(y, x);
-
-//generation();
-
-
-
-//Both of these work to console log kittens but not to make cells[y][x].isAlive true. Have tried this code outside of document ready, and before and after defining all variables and calling all functions
-
-// function play() {
-// 	console.log('kittens');
-// 	cells[4][3].isAlive = true;
-// }
-
-
-	setInterval(function() {
-		autoUpdate;
-          //console.log('squid');
-    }, 2000);

@@ -126,20 +126,20 @@ function aliveInit(numAliveStart) {
 function generation(numAlive, y, x) {
 	console.log("kittens inside the generation function!")
     if (cells[y][x].isAlive === true) {
-    	console.log('cell '+ y + ', '+x+' is alive');
+    	// console.log('cell '+ y + ', '+x+' is alive');
     	// Any live cell with fewer than two live neighbours dies, as if caused by under-population.
 	    if (numAlive < 2) {
-	    	console.log('cell '+y+', '+x+' has less than 2 alive neighbors')
+	    	// console.log('cell '+y+', '+x+' has less than 2 alive neighbors')
 	    	cells[y][x].isAlive = false;
 	    }
 	    // Any live cell with two or three live neighbours lives on to the next generation.
 	    else if (numAlive === 2 || numAlive === 3 ) {
-			console.log('cell '+y+', '+x+' exactly 2 or 3 alive neighbors')
+			// console.log('cell '+y+', '+x+' exactly 2 or 3 alive neighbors')
 			cells[y][x].isAlive = true;
 		}
 	    // Any live cell with more than three live neighbours dies, as if by overcrowding.
 	   else if (numAlive > 3) {
-	   		console.log('cell '+y+', '+x+' has more than 3 alive neighbors')
+	   		// console.log('cell '+y+', '+x+' has more than 3 alive neighbors')
 	    	cells[y][x].isAlive = false;
 	    }
     }
@@ -147,7 +147,7 @@ function generation(numAlive, y, x) {
     	console.log('cell '+ y + ', '+x+' is dead');
 	    // Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.	
 	    if (numAlive === 3) {
-	    	console.log('cell '+y+', '+x+' has exactly 3 alive neighbors')
+	    	// console.log('cell '+y+', '+x+' has exactly 3 alive neighbors')
 	    	cells[y][x].isAlive = true;
 	    }
     }
@@ -161,17 +161,18 @@ function autoUpdate() {
 }
 
 function play() {
-	//WHY DOES LINE 160 NOT WORK HERE?
 	//console.log('click');
-	for (y=0; y < cells.length; y++) {
-		for (var x = 0; x < cells[y].length; x++) {
-			console.log('kittens in for loop');
-			findNeighbors(y, x);
-			numAliveNeighbors(neighbors, y, x);
-			generation(y, x);
-
+	setInterval(function() {
+		for (var y = 0; y < cells.length; y++) {
+			for (var x = 0; x < cells[y].length; x++) {	
+				var neighbors = findNeighbors(y, x);
+				//console.log(neighbors);
+				var numAlive = numAliveNeighbors(neighbors, y, x);
+				//console.log(numAlive);
+				generation(numAlive, y, x);
+			}
 		}
-	}
+    }, 2000);
 }
 
 function testInit() {
@@ -220,27 +221,7 @@ for (y=0; y < cells.length; y++) {
 	}
 }
 
-var neighbors = findNeighbors(0, 0);
-console.log(neighbors);
-var numAlive = numAliveNeighbors(neighbors, 0, 0);
-console.log(numAlive);
-generation(numAlive, 0, 0);
-//aliveCheck(0,0);
-//generation(numAlive, y, x);
 
-
-// for (var y = 0; y < cells.length; y++) {
-// 	//console.log(cells[y]);
-// 	for (var x = 0; x < cells[y].length; x++) {
-// 		//console.log(cells[y][x]);
-		
-// 		var neighbors = findNeighbors(y,x);
-// 		numAliveNeighbors(neighbors, y, x);
-// 		//console.log(neighbors);
-// 		//numAliveStart(neighbors, y, x);
-// 		//var num_neighbors = 
-// 	}
-// };
 
 // cells[4][3].isAlive = true;
 // aliveCheck(4, 3);

@@ -26,7 +26,6 @@ function cellDisplay() {
 		$grid.append($row);
 		for (var x = 0; x < cells[y].length; x++) {	
 			var $cell = $('<td id="cell_'+ y +'_' + x +'">');
-			$cell.append($('<p>'+ cells[y][x].isAlive +'</p>'));
 			$row.append($cell);
 		}
 	}
@@ -101,11 +100,13 @@ var numAliveNeighbors = function(neighbors, y, x) {
 //given cell's coordinates checks if cell is alive & adds class alive
 var aliveCheck = function(y, x) {
 	//console.log("kittens inside the aliveCheck function!")
+	$thisCell = $('#cell_'+ y +'_' + x);
 	if (cells[y][x].isAlive) {
-		$('#cell_'+ y +'_' + x).addClass('alive');
+		$thisCell.addClass('alive');
+
 	}
 	else {
-		$('#cell_'+ y + '_' + x).removeClass('alive');
+		$thisCell.removeClass('alive');
 	}
 }
 
@@ -168,9 +169,10 @@ function gameFrame() {
 }
 
 function play() {
+	gameFrame();
 	//console.log('click');
 	setInterval(function() {
-
+		gameFrame();
     }, 2000);
 }
 
@@ -195,9 +197,9 @@ function testInit() {
 
 //FYI -- syntax declaring empty array (single instead of double) could be source of bugs in future
 var cells = [];
-var cols = 10;
-var rows = 10;
-var numAliveStart = cols * rows / 3;
+var cols = 20;
+var rows = 20;
+var numAliveStart = cols * rows / 2;
 
 //create cell objects
 cellCreator(rows, cols);

@@ -36,7 +36,7 @@ function cellDisplay() {
 //finds the neighbors for each cell given its coordinates
 //should refactor this to take a cells y and x and return array of neighbors -- purpose of this is to take neighbors array out of the cell object
 function findNeighbors(y, x) {
-	//console.log("kittens inside the findNeighbors function!")
+	console.log("kittens inside the findNeighbors function!")
 
 	//neighbors for cells at top edge of grid
 	if (y === 0 && 0 < x && x < (cols-1)) {
@@ -88,19 +88,17 @@ function findNeighbors(y, x) {
 //function that takes a cell obj & returns the number of alive neighbors
 //CHANGE THIS... PHASE OUT CELLS.NEIGHBORS 
 function numAliveNeighbors(neighbors, y, x) {
-	console.log('in the numAliveNeighbors function');
 	i = 0;
 	//console.log(cell);
 	var neighbors = cells[y][x].neighbors;
 	//console.log(neighbors);
-	for (n=0; n < neighbors.length; n++) {
-		if (n.isAlive === true) {
+	for (n in neighbors) {
+		if (neighbors[n].isAlive === true) {
 			i += 1;
 		}
 	}
 	//console.log(numAlive);
 	cells[y][x].numNeighbors = i;
-	console.log(cells[y][x].numNeighbors);
 }
 
 //given cell's coordinates checks if cell is alive & adds class alive
@@ -209,13 +207,15 @@ testInit();
 $('#playBtn').click(play);
 
 
-//findNeighbors(1,3);
+// findNeighbors(1,3);
+// console.log(neighbors);
 
-for (var y = 0; y < cells.length; y++) {
-	for (var x = 0; x < cells[y].length; x++) {
+for (y in cells) {
+	for (x in cells[y]) {
 		//add alive class display
 		aliveCheck(y, x);
 		//calculates & returns array of neighboring cells
+
 	}
 }
 
@@ -236,9 +236,8 @@ for (var y = 0; y < cells.length; y++) {
 	//console.log(cells[y]);
 	for (var x = 0; x < cells[y].length; x++) {
 		//console.log(cells[y][x]);
-		findNeighbors(y,x);
-		// console.log(neighbors);
-		// numAliveNeighbors(y,x,neighbors);
+		var neighbors = findNeighbors(y,x);
+		console.log(neighbors);
 	}
 };
 

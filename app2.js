@@ -26,7 +26,7 @@ function cellDisplay() {
 		$grid.append($row);
 		for (x in cells[y]) {
 			var $cell = $('<td id="cell_'+ y +'_' + x +'">');
-			$cell.append($('<p>'+ y +', ' + x +'</p>'));
+			//$cell.append($('<p>'+ y +', ' + x +'</p>'));
 			$row.append($cell);
 		}
 	}
@@ -100,7 +100,7 @@ var numAliveNeighbors = function(neighbors, y, x) {
 
 //given cell's coordinates checks if cell is alive & adds class alive
 var aliveCheck = function(y, x) {
-	console.log("kittens inside the aliveCheck function!")
+	//console.log("kittens inside the aliveCheck function!")
 	if (cells[y][x].isAlive) {
 		$('#cell_'+ y +'_' + x).addClass('alive');
 	}
@@ -186,14 +186,19 @@ function testInit() {
 	cells[5][2].isAlive = true;
 	cells[5][3].isAlive = true;
 	cells[0][0].isAlive = true;
+	for (y=0; y < cells.length; y++) {
+		for (var x = 0; x < cells[y].length; x++) {
+			aliveCheck(y, x);
+		}
+	}
 }
 
 
 //FYI -- syntax declaring empty array (single instead of double) could be source of bugs in future
 var cells = [];
-var cols = 4;
-var rows = 6;
-var numAliveStart = cols * rows / 2;
+var cols = 100;
+var rows = 50;
+var numAliveStart = cols * rows / 3;
 
 //create cell objects
 cellCreator(rows, cols);
@@ -202,8 +207,8 @@ cellCreator(rows, cols);
 cellDisplay();
 
 //initiate which cells start out alive
-//aliveInit(numAliveStart);
-testInit();
+aliveInit(numAliveStart);
+//testInit();
 
 
 $('#playBtn').click(play);
@@ -212,14 +217,7 @@ $('#playBtn').click(play);
 // findNeighbors(1,3);
 // console.log(neighbors);
 
-for (y=0; y < cells.length; y++) {
-	for (var x = 0; x < cells[y].length; x++) {
-		//add alive class display
-		aliveCheck(y, x);
-		//calculates & returns array of neighboring cells
 
-	}
-}
 
 
 

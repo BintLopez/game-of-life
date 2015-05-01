@@ -99,10 +99,13 @@ var numAliveNeighbors = function(neighbors, y, x) {
 }
 
 //given cell's coordinates checks if cell is alive & adds class alive
-function aliveCheck(y, x) {
+var aliveCheck = function(y, x) {
 	console.log("kittens inside the aliveCheck function!")
 	if (cells[y][x].isAlive) {
-		$('#cell_'+ y +'_' + x).toggleClass('alive');
+		$('#cell_'+ y +'_' + x).addClass('alive');
+	}
+	else {
+		$('#cell_'+ y + '_' + x).removeClass('alive');
 	}
 }
 
@@ -222,16 +225,9 @@ console.log(neighbors);
 var numAlive = numAliveNeighbors(neighbors, 0, 0);
 console.log(numAlive);
 generation(numAlive, 0, 0);
+//aliveCheck(0,0);
 //generation(numAlive, y, x);
 
-for (y=0; y < cells.length; y++) {
-	for (var x = 0; x < cells[y].length; x++) {
-		//add alive class display
-		aliveCheck(y, x);
-		//calculates & returns array of neighboring cells
-
-	}
-}
 
 // for (var y = 0; y < cells.length; y++) {
 // 	//console.log(cells[y]);

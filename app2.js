@@ -16,17 +16,17 @@ function cellCreator(rows, cols) {
 			cells[y][x] = new Cell(config, x, y);
 		}
 	}
-}
+}	
 
 //need to give each cell an id in the DOM
 function cellDisplay() {
 	var $grid = $("<table>");
-	for (y in cells) {
+	for (var y = 0; y < cells.length; y++) {
 		var $row = $('<tr>');
 		$grid.append($row);
-		for (x in cells[y]) {
+		for (var x = 0; x < cells[y].length; x++) {	
 			var $cell = $('<td id="cell_'+ y +'_' + x +'">');
-			//$cell.append($('<p>'+ y +', ' + x +'</p>'));
+			$cell.append($('<p>'+ cells[y][x].isAlive +'</p>'));
 			$row.append($cell);
 		}
 	}
@@ -111,7 +111,7 @@ var aliveCheck = function(y, x) {
 
 //sets up which cells start out alive given the value numAliveStart -- this variable is defined as half the amount of cells in the grid
 function aliveInit(numAliveStart) {
-	console.log("kittens inside the aliveInit function!")
+	//console.log("kittens inside the aliveInit function!")
 	for (var i = 0; i < numAliveStart; i++) {
 		y = Math.floor(Math.random() * (rows - 0) + 0);
 		x = Math.floor(Math.random() * (cols - 0) + 0);
@@ -124,7 +124,7 @@ function aliveInit(numAliveStart) {
 
 //this takes a cell's coordinates & # of neighbors & determines whether the cell lives, dies, or regenerates for the next round 
 function generation(numAlive, y, x) {
-	console.log("kittens inside the generation function!")
+	//console.log("kittens inside the generation function!")
     if (cells[y][x].isAlive === true) {
     	// console.log('cell '+ y + ', '+x+' is alive');
     	// Any live cell with fewer than two live neighbours dies, as if caused by under-population.
@@ -155,23 +155,22 @@ function generation(numAlive, y, x) {
 }
 
 //start function that starts playing onclick
-function autoUpdate() {
-	console.log(autoUpdate);
-
+function gameFrame() {
+	for (var y = 0; y < cells.length; y++) {
+		for (var x = 0; x < cells[y].length; x++) {	
+			var neighbors = findNeighbors(y, x);
+			//console.log(neighbors);
+			var numAlive = numAliveNeighbors(neighbors, y, x);
+			//console.log(numAlive);
+			generation(numAlive, y, x);
+		}
+	}
 }
 
 function play() {
 	//console.log('click');
 	setInterval(function() {
-		for (var y = 0; y < cells.length; y++) {
-			for (var x = 0; x < cells[y].length; x++) {	
-				var neighbors = findNeighbors(y, x);
-				//console.log(neighbors);
-				var numAlive = numAliveNeighbors(neighbors, y, x);
-				//console.log(numAlive);
-				generation(numAlive, y, x);
-			}
-		}
+
     }, 2000);
 }
 
@@ -196,8 +195,8 @@ function testInit() {
 
 //FYI -- syntax declaring empty array (single instead of double) could be source of bugs in future
 var cells = [];
-var cols = 100;
-var rows = 50;
+var cols = 10;
+var rows = 10;
 var numAliveStart = cols * rows / 3;
 
 //create cell objects

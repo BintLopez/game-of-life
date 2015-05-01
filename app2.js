@@ -36,7 +36,7 @@ function cellDisplay() {
 //finds the neighbors for each cell given its coordinates
 //should refactor this to take a cells y and x and return array of neighbors -- purpose of this is to take neighbors array out of the cell object
 function findNeighbors(y, x) {
-	console.log("kittens inside the findNeighbors function!")
+	//console.log("kittens inside the findNeighbors function!")
 
 	//neighbors for cells at top edge of grid
 	if (y === 0 && 0 < x && x < (cols-1)) {
@@ -87,18 +87,15 @@ function findNeighbors(y, x) {
 
 //function that takes a cell obj & returns the number of alive neighbors
 //CHANGE THIS... PHASE OUT CELLS.NEIGHBORS 
-function numAliveNeighbors(neighbors, y, x) {
+var numAliveNeighbors = function(neighbors, y, x) {
 	i = 0;
-	//console.log(cell);
-	var neighbors = cells[y][x].neighbors;
-	//console.log(neighbors);
-	for (n in neighbors) {
+	for (var n = 0; n < neighbors.length; n++) {
 		if (neighbors[n].isAlive === true) {
 			i += 1;
 		}
 	}
-	//console.log(numAlive);
-	cells[y][x].numNeighbors = i;
+	numAlive = i;
+	return numAlive;
 }
 
 //given cell's coordinates checks if cell is alive & adds class alive
@@ -219,6 +216,9 @@ for (y in cells) {
 	}
 }
 
+var neighbors = findNeighbors(5, 3);
+numAliveNeighbors(neighbors, 5, 3);
+
 // logged_cells = {cells: cells}
 // console.log(logged_cells);
 // for (y in cells) {
@@ -232,14 +232,18 @@ for (y in cells) {
 // 	}
 // }
 
-for (var y = 0; y < cells.length; y++) {
-	//console.log(cells[y]);
-	for (var x = 0; x < cells[y].length; x++) {
-		//console.log(cells[y][x]);
-		var neighbors = findNeighbors(y,x);
-		console.log(neighbors);
-	}
-};
+// for (var y = 0; y < cells.length; y++) {
+// 	//console.log(cells[y]);
+// 	for (var x = 0; x < cells[y].length; x++) {
+// 		//console.log(cells[y][x]);
+		
+// 		var neighbors = findNeighbors(y,x);
+// 		numAliveNeighbors(neighbors, y, x);
+// 		//console.log(neighbors);
+// 		//numAliveStart(neighbors, y, x);
+// 		//var num_neighbors = 
+// 	}
+// };
 
 // cells[4][3].isAlive = true;
 // aliveCheck(4, 3);

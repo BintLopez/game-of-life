@@ -18,7 +18,7 @@ var cellCreator = function(rows, cols) {
 	}
 }	
 
-//need to give each cell an id in the DOM
+//iterates through cells & creates table, tr, td -- each td is given specific id based on cell's y and x
 var cellDisplay = function() {
 	var $grid = $("<table>");
 	for (var y = 0; y < cells.length; y++) {
@@ -32,8 +32,33 @@ var cellDisplay = function() {
 	$('#board').append($grid).addClass('grid');
 }
 
-//finds the neighbors for each cell given its coordinates
-//need to refactor this to make DRY
+//given cell's coordinates checks if cell is alive & adds class alive
+var aliveCheck = function(y, x) {
+	//console.log("kittens inside the aliveCheck function!")
+	$thisCell = $('#cell_'+ y +'_' + x);
+	if (cells[y][x].isAlive) {
+		$thisCell.addClass('alive');
+	}
+	else {
+		$thisCell.removeClass('alive');
+	}
+}
+
+//sets up which cells start out alive given the value numAliveStart -- this variable is defined as half the amount of cells in the grid
+var aliveInit = function(numAliveStart) {
+	//console.log("kittens inside the aliveInit function!")
+	for (var i = 0; i < numAliveStart; i++) {
+		y = Math.floor(Math.random() * (rows - 0) + 0);
+		x = Math.floor(Math.random() * (cols - 0) + 0);
+		// console.log("y is "+ y);
+		// console.log("x is "+ x);
+		cells[y][x].isAlive = true;
+		aliveCheck(y, x);
+	}
+}
+
+//returns array of neighboring cell objects for each cell given its coordinates
+//want to refactor this to make DRY
 var findNeighbors = function(y, x) {
 	//console.log("kittens inside the findNeighbors function!")
 
@@ -84,7 +109,7 @@ var findNeighbors = function(y, x) {
 	return neighbors;
 }
 
-//function that takes a cell obj & returns the number of alive neighbors
+//function that takes a cell's coordinates and an array of neighboring cells & returns the number of alive neighbors
 var numAliveNeighbors = function(neighbors, y, x) {
 	i = 0;
 	for (var n = 0; n < neighbors.length; n++) {
@@ -94,31 +119,6 @@ var numAliveNeighbors = function(neighbors, y, x) {
 	}
 	numAlive = i;
 	return numAlive;
-}
-
-//given cell's coordinates checks if cell is alive & adds class alive
-var aliveCheck = function(y, x) {
-	//console.log("kittens inside the aliveCheck function!")
-	$thisCell = $('#cell_'+ y +'_' + x);
-	if (cells[y][x].isAlive) {
-		$thisCell.addClass('alive');
-	}
-	else {
-		$thisCell.removeClass('alive');
-	}
-}
-
-//sets up which cells start out alive given the value numAliveStart -- this variable is defined as half the amount of cells in the grid
-var aliveInit = function(numAliveStart) {
-	//console.log("kittens inside the aliveInit function!")
-	for (var i = 0; i < numAliveStart; i++) {
-		y = Math.floor(Math.random() * (rows - 0) + 0);
-		x = Math.floor(Math.random() * (cols - 0) + 0);
-		// console.log("y is "+ y);
-		// console.log("x is "+ x);
-		cells[y][x].isAlive = true;
-		aliveCheck(y, x);
-	}
 }
 
 //this takes a cell's coordinates & # of neighbors & determines whether the cell lives, dies, or regenerates for the next round 

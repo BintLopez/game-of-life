@@ -100,12 +100,9 @@ var numAliveNeighbors = function(neighbors, y, x) {
 
 //given cell's coordinates checks if cell is alive & adds class alive
 function aliveCheck(y, x) {
-	//console.log("kittens inside the aliveCheck function!")
-	if (cells[y][x].isAlive === true) {
-		$('#cell_'+ y +'_' + x).addClass('alive');
-	}
-	else {
-		//$('#cell_'+ y +'_' + x).addClass('dead');
+	console.log("kittens inside the aliveCheck function!")
+	if (cells[y][x].isAlive) {
+		$('#cell_'+ y +'_' + x).toggleClass('alive');
 	}
 }
 
@@ -123,28 +120,32 @@ function aliveInit(numAliveStart) {
 }
 
 //this takes a cell's coordinates & # of neighbors & determines whether the cell lives, dies, or regenerates for the next round 
-function generation(y, x) {
+function generation(numAlive, y, x) {
 	console.log("kittens inside the generation function!")
     if (cells[y][x].isAlive === true) {
+    	console.log('cell '+ y + ', '+x+' is alive');
     	// Any live cell with fewer than two live neighbours dies, as if caused by under-population.
-	    if (cells[y][x].numNeighbors < 2) {
+	    if (numAlive < 2) {
+	    	console.log('cell '+y+', '+x+' has less than 2 alive neighbors')
 	    	cells[y][x].isAlive = false;
 	    }
 	    // Any live cell with two or three live neighbours lives on to the next generation.
-	    else if (cells[y][x].numNeighbors === 2 || cells[y][x].num_neighbors === 3 ) {
+	    else if (numAlive === 2 || numAlive === 3 ) {
+			console.log('cell '+y+', '+x+' exactly 2 or 3 alive neighbors')
 			cells[y][x].isAlive = true;
-			aliveClass(y, x, $cell);
 		}
 	    // Any live cell with more than three live neighbours dies, as if by overcrowding.
-	   else if (cells[y][x].numNeighbors > 3) {
+	   else if (numAlive > 3) {
+	   		console.log('cell '+y+', '+x+' has more than 3 alive neighbors')
 	    	cells[y][x].isAlive = false;
 	    }
     }
     else {
+    	console.log('cell '+ y + ', '+x+' is dead');
 	    // Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.	
-	    if (cells[y][x].numNeighbors === 3) {
+	    if (numAlive === 3) {
+	    	console.log('cell '+y+', '+x+' has exactly 3 alive neighbors')
 	    	cells[y][x].isAlive = true;
-	    	aliveClass(y, x, $cell);
 	    }
     }
     aliveCheck(y, x);
@@ -159,8 +160,8 @@ function autoUpdate() {
 function play() {
 	//WHY DOES LINE 160 NOT WORK HERE?
 	//console.log('click');
-	for (y in cells) {
-		for (x in cells[y]) {
+	for (y=0; y < cells.length; y++) {
+		for (var x = 0; x < cells[y].length; x++) {
 			console.log('kittens in for loop');
 			findNeighbors(y, x);
 			numAliveNeighbors(neighbors, y, x);
@@ -207,8 +208,8 @@ $('#playBtn').click(play);
 // findNeighbors(1,3);
 // console.log(neighbors);
 
-for (y in cells) {
-	for (x in cells[y]) {
+for (y=0; y < cells.length; y++) {
+	for (var x = 0; x < cells[y].length; x++) {
 		//add alive class display
 		aliveCheck(y, x);
 		//calculates & returns array of neighboring cells
@@ -216,21 +217,21 @@ for (y in cells) {
 	}
 }
 
-var neighbors = findNeighbors(5, 3);
-numAliveNeighbors(neighbors, 5, 3);
+var neighbors = findNeighbors(0, 0);
+console.log(neighbors);
+var numAlive = numAliveNeighbors(neighbors, 0, 0);
+console.log(numAlive);
+generation(numAlive, 0, 0);
+//generation(numAlive, y, x);
 
-// logged_cells = {cells: cells}
-// console.log(logged_cells);
-// for (y in cells) {
-// 	console.log("y is "+y);
-// 	for (x in cells[y]) {
-// 		//console.log("2nd for loop")
-// 		console.log('x is '+x)
-// 		findNeighbors(y, x);
-// 		// numAliveNeighbors(y, x);
-// 		// console.log(neighbors);
-// 	}
-// }
+for (y=0; y < cells.length; y++) {
+	for (var x = 0; x < cells[y].length; x++) {
+		//add alive class display
+		aliveCheck(y, x);
+		//calculates & returns array of neighboring cells
+
+	}
+}
 
 // for (var y = 0; y < cells.length; y++) {
 // 	//console.log(cells[y]);
